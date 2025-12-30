@@ -1,0 +1,334 @@
+@import url('https://fonts.googleapis.com/css2?family=Sekuya&display=swap');
+@import "tailwindcss";
+
+:root {
+    --background: #ffffff;
+    --foreground: #171717;
+
+    /* Vorq Design Tokens - Colors */
+    --vorq-bg-body: #ffffff;
+    --vorq-text-primary: #111111;
+    --vorq-text-secondary: #4a4a4a;
+    --vorq-text-accent-saas: #4a8bff;
+    --vorq-nav-link: #111111;
+    --vorq-nav-link-hover: #000000;
+    --vorq-button-primary-bg: #111111;
+    --vorq-button-primary-text: #ffffff;
+    --vorq-button-primary-glow-start: #45e6ff;
+    --vorq-button-primary-glow-end: #00b3ff;
+    --vorq-button-secondary-border: #dddddd;
+    --vorq-button-secondary-text: #111111;
+    --vorq-chip-border: #dddddd;
+    --vorq-logo-text: #111111;
+    --vorq-logo-icon: #111111;
+    --vorq-brand-logo-muted: #b3b3b3;
+
+    /* Vorq Shadows */
+    --shadow-vorq-none: none;
+    --shadow-vorq-glow-strong: 0 0 80px rgba(69, 230, 255, 0.7);
+    --shadow-vorq-glow-soft: 0 0 40px rgba(69, 230, 255, 0.4);
+
+    /* Vorq Colors */
+    --color-vorq-bg-body: var(--vorq-bg-body);
+    --color-vorq-text-primary: var(--vorq-text-primary);
+    --color-vorq-text-secondary: var(--vorq-text-secondary);
+    --color-vorq-text-accent: var(--vorq-text-accent-saas);
+    --color-vorq-nav-link: var(--vorq-nav-link);
+    --color-vorq-nav-link-hover: var(--vorq-nav-link-hover);
+    --color-vorq-btn-primary-bg: var(--vorq-button-primary-bg);
+    --color-vorq-btn-primary-text: var(--vorq-button-primary-text);
+    --color-vorq-btn-glow-start: var(--vorq-button-primary-glow-start);
+    --color-vorq-btn-glow-end: var(--vorq-button-primary-glow-end);
+    --color-vorq-btn-secondary-border: var(--vorq-button-secondary-border);
+    --color-vorq-btn-secondary-text: var(--vorq-button-secondary-text);
+    --color-vorq-chip-border: var(--vorq-chip-border);
+    --color-vorq-logo-text: var(--vorq-logo-text);
+    --color-vorq-logo-icon: var(--vorq-logo-icon);
+    --color-vorq-brand-muted: var(--vorq-brand-logo-muted);
+}
+
+@theme inline {
+    --color-background-light: var(--background);
+}
+
+/* Scrollbar Styling - Adjusted for Light Theme */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Base Body Styles */
+body {
+    background: var(--vorq-bg-body);
+    color: var(--vorq-text-primary);
+    font-family:
+        "Inter",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   Vorq Design System
+   ======================================== */
+
+/* Vorq Container */
+.vorq-container {
+    width: 100%;
+    max-width: 2400px;
+    margin: 0 auto;
+    padding: 0 12px;
+}
+
+@media (min-width: 768px) {
+    .vorq-container {
+        padding: 0 40px;
+    }
+}
+
+/* Vorq Typography */
+.vorq-h1 {
+    font-family:
+        var(--font-archivo),
+        "Archivo",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    font-size: 40px;
+    line-height: 48px;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    color: var(--vorq-text-primary);
+}
+
+@media (min-width: 768px) {
+    .vorq-h1 {
+        font-size: 56px;
+        line-height: 64px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .vorq-h1 {
+        font-size: 90px;
+        line-height: 90px;
+    }
+}
+
+.vorq-subtitle {
+    font-family:
+        var(--font-archivo),
+        "Archivo",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    font-size: 18px;
+    line-height: 20px;
+    font-weight: 400;
+    color: var(--vorq-text-secondary);
+}
+
+@media (min-width: 768px) {
+    .vorq-subtitle {
+        font-size: 20px;
+        line-height: 32px;
+    }
+}
+
+.vorq-nav-link {
+    font-family:
+        var(--font-archivo),
+        "Archivo",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--vorq-nav-link);
+    transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.vorq-nav-link:hover {
+    color: var(--vorq-nav-link-hover);
+}
+
+.vorq-button-label {
+    font-family:
+        var(--font-archivo),
+        "Archivo",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.vorq-brand-label {
+    font-family:
+        var(--font-archivo),
+        "Archivo",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    line-height: 24px;
+    font-weight: 500;
+    color: var(--vorq-brand-logo-muted);
+}
+
+/* Vorq Buttons */
+.vorq-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 28px;
+    background-color: var(--vorq-button-primary-bg);
+    color: var(--vorq-button-primary-text);
+    font-family: var(--font-archivo), "Archivo", system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 768px) {
+    .vorq-btn-primary {
+        height: 56px;
+        padding: 0 40px;
+    }
+}
+
+.vorq-btn-primary:hover {
+    background-color: var(--vorq-nav-link-hover);
+    transform: scale(1.02);
+    box-shadow: var(--shadow-vorq-glow-strong);
+}
+
+.vorq-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 28px;
+    background-color: #ffffff;
+    color: var(--vorq-button-secondary-text);
+    font-family: var(--font-archivo), "Archivo", system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 9999px;
+    border: 1px solid var(--vorq-button-secondary-border);
+    cursor: pointer;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 768px) {
+    .vorq-btn-secondary {
+        height: 56px;
+        padding: 0 40px;
+    }
+}
+
+.vorq-btn-secondary:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-color: #bbbbbb;
+}
+
+/* Vorq Glow Effect */
+.vorq-glow-wrapper {
+    position: relative;
+    display: inline-flex;
+}
+
+.vorq-glow-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg,
+            var(--vorq-button-primary-glow-start),
+            var(--vorq-button-primary-glow-end));
+    border-radius: 9999px;
+    filter: blur(40px);
+    opacity: 0.7;
+    z-index: -1;
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vorq-glow-wrapper:hover::before {
+    filter: blur(60px);
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Vorq Logo */
+.vorq-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--vorq-logo-text);
+    font-family: var(--font-archivo), "Archivo", system-ui, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+@media (min-width: 768px) {
+    .vorq-logo {
+        font-size: 20px;
+    }
+}
+
+/* Vorq Text Accent */
+.vorq-text-accent {
+    color: var(--vorq-text-accent-saas);
+}
+
+/* Hide Next.js Dev Indicators */
+[data-nextjs-toast],
+[data-nextjs-toast-icon],
+[data-nextjs-toast-wrapper] {
+    display: none !important;
+}
