@@ -16,11 +16,11 @@ export const blogPosts: Record<string, BlogPost> = {
     'building-first-website': {
         title: "When’s the Right Time to Build Your First Professional Website?",
         category: "Startup Growth",
-        date: "Jan 3, 2026",
+        date: "Jan 6, 2026",
         author: {
             name: "Ravi Pratap Singh",
             image: "/cofounder2.jpg",
-            date: "Jan 3, 2026"
+            date: "Jan 6, 2026"
         },
         content: (
             <>
@@ -111,11 +111,11 @@ export const blogPosts: Record<string, BlogPost> = {
     'marketing-for-devtools': {
         title: "Most Marketing Sites Don't Work for DevTools",
         category: "DevTools Marketing",
-        date: "Oct 5, 2025",
+        date: "Jan 5, 2026",
         author: {
-            name: "Helen Chay",
-            image: "https://placehold.co/100x100/333/fff?text=HC",
-            date: "Oct 5, 2025"
+            name: "Ravi Pratap Singh",
+            image: "/cofounder2.jpg",
+            date: "Jan 5, 2026"
         },
         content: (
             <>
@@ -165,11 +165,11 @@ export const blogPosts: Record<string, BlogPost> = {
     'design-team-vs-freelancer': {
         title: "Design Team or Freelancer: What Works for Startups",
         category: "Startup Growth",
-        date: "Oct 13, 2025",
+        date: "Jan 2, 2026",
         author: {
-            name: "Alex M.",
-            image: "https://placehold.co/100x100/333/fff?text=AM",
-            date: "Oct 13, 2025"
+            name: "Priyanshu Bhardwaj",
+            image: "/cofounder1.jpg",
+            date: "Jan 2, 2026"
         },
         content: (
             <>

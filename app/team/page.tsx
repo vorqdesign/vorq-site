@@ -35,7 +35,7 @@ export default function TeamPage() {
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
 
                     {/* LEFT COLUMN: Sticky Text */}
-                    <div className="flex flex-col justify-center text-left relative lg:sticky lg:top-40">
+                    <div className="flex flex-col justify-center text-left relative lg:sticky lg:top-40 mt-40">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}

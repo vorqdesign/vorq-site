@@ -11,7 +11,7 @@ export default function VorqNav() {
   const navLinks = [
     { label: "Services", href: "/#services" },
     { label: "Projects", href: "/#projects" },
-    { label: "Blog", href: "/#blog" },
+    { label: "Blog", href: "/blog" },
     { label: "Team", href: "/team" },
   ];
 

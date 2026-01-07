@@ -86,10 +86,10 @@ export default function BlogPage() {
 
                         <div className="relative z-10 w-full md:w-[60%]">
                             <div className="flex items-center justify-between mb-4">
-                                <span className="text-sm font-bold uppercase tracking-widest opacity-80">Oct 8, 2025</span>
+                                <span className="text-sm font-bold uppercase tracking-widest opacity-80">Jan 6, 2026</span>
                             </div>
                             <h2 className="text-3xl md:text-5xl font-medium leading-[1.1] tracking-tighter mb-4">
-                                This is Title
+                                When’s the Right Time to Build Your First Professional Website?
                             </h2>
                             <span className="text-xs font-bold uppercase tracking-widest opacity-60 mt-8 block">Startup Growth</span>
                         </div>
@@ -160,7 +160,7 @@ export default function BlogPage() {
 
                         <div className="relative z-10 mt-auto">
                             <span className="text-xs font-bold uppercase tracking-widest opacity-60 mb-3 block">DevTools Marketing</span>
-                            <span className="text-sm font-bold uppercase tracking-widest opacity-80 mb-2 block">Oct 5, 2025</span>
+                            <span className="text-sm font-bold uppercase tracking-widest opacity-80 mb-2 block">Jan 5, 2026</span>
                             <h2 className="text-2xl md:text-3xl font-medium leading-[1.1] tracking-tighter">
                                 Most Marketing Sites Don't Work for DevTools
                             </h2>
@@ -194,7 +194,7 @@ export default function BlogPage() {
 
                             <div className="mb-auto"></div> {/* Spacer */}
 
-                            <span className="text-sm font-bold uppercase tracking-widest opacity-60 mb-2 block">Oct 13, 2025</span>
+                            <span className="text-sm font-bold uppercase tracking-widest opacity-60 mb-2 block">Jan 2, 2026</span>
                             <h2 className="text-3xl md:text-4xl font-medium leading-[1.1] tracking-tighter mb-4">
                                 Design Team or Freelancer: What Works for Startups
                             </h2>

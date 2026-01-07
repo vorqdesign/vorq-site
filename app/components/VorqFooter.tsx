@@ -24,7 +24,7 @@ const footerLinks = {
     { label: "Our approach", href: "#" },
     { label: "Team", href: "/team" },
     { label: "Why VORQ", href: "#" },
-    { label: "Blog", href: "#" },
+    { label: "Blog", href: "/blog" },
   ],
 };
 

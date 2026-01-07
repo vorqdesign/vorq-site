@@ -10,6 +10,7 @@ import { ArrowLeft, Rocket, Code, Users } from "lucide-react"; // Assuming lucid
 
 import { blogPosts } from "../blogData";
 import { useParams } from "next/navigation";
+import ShareButtons from "../../components/ShareButtons";
 
 const assets = {
     rocket: "/images/rock.png",
@@ -78,7 +79,7 @@ export default function BlogPostPage() {
                                 {post.title}
                             </h1>
 
-                            <div className="flex items-center justify-between border-t border-gray-100 pt-8 mt-12">
+                            <div className="flex flex-col gap-6 items-start border-t border-gray-100 pt-8 mt-12">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
                                         <Image src={post.author.image} alt={post.author.name} width={48} height={48} className="object-cover" />
@@ -90,15 +91,8 @@ export default function BlogPostPage() {
                                     </div>
                                 </div>
 
-                                <div className="flex gap-4">
-                                    {/* Share Icons */}
-                                    <div className="flex items-center gap-3">
-                                        <span className="text-sm text-gray-400 font-medium mr-2">Share:</span>
-                                        <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 transition-colors text-sm font-bold">X</button>
-                                        <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 transition-colors text-sm font-bold">f</button>
-                                        <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 transition-colors text-sm font-bold">in</button>
-                                        <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 transition-colors text-sm font-bold">🔗</button>
-                                    </div>
+                                <div className="flex gap-4 w-full">
+                                    <ShareButtons title={post.title} />
                                 </div>
                             </div>
                         </motion.header>
@@ -133,7 +127,7 @@ export default function BlogPostPage() {
                         </div>
 
                         {/* Author Footer */}
-                        <div className="border-t border-gray-100 pt-10 pb-20 flex items-center justify-between">
+                        <div className="border-t border-gray-100 pt-10 pb-20 flex flex-col gap-6 items-start">
                             <div className="flex items-center gap-4">
                                 <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
                                     <Image src={post.author.image} alt={post.author.name} width={48} height={48} className="object-cover" />
@@ -143,8 +137,8 @@ export default function BlogPostPage() {
                                     <div className="text-sm text-gray-500">{post.author.date}</div>
                                 </div>
                             </div>
-                            <div className="flex gap-4">
-                                <button className="text-gray-400 hover:text-gray-900 transition-colors font-medium">Share</button>
+                            <div className="flex gap-4 w-full">
+                                <ShareButtons title={post.title} />
                             </div>
                         </div>
                     </div>
