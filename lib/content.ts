@@ -9,13 +9,17 @@
  * TODO: Delivery language conflicted across the old site (3-day average
  * in the hero, 7-day average on the booking page and marquee, “under a
  * week” / “under 10 days” in the studio notes, and per-project times
- * from 6 hours to 4 days). Reconcile one figure. The booking perk below
- * still says “7-day average delivery”; the studio note still says most
- * projects go live in under a week.
+ * from 6 hours to 4 days). Reconcile one figure. The page says most
+ * projects go live in under a week. The old “7-day average” perk is
+ * not shown.
  * TODO: The quote attributed to Ravi Pratap Singh states that conversion
  * rates doubled. Confirm it is approved to publish as a client result.
+ * It is not shown.
  * TODO: The HillMan Media quote names a company and no person. Confirm
- * it is approved. No HillMan project is in the work list.
+ * it is approved. No HillMan project is in the work list. It is not shown.
+ * SamaWritten’s live homepage (Oct 2026) leads with vitals, medical ID,
+ * and contact check-ins. The older “cardiac wearable / 20+ conditions”
+ * line is no longer what the site shows, so the caption follows the live page.
  * TODO: A “Lighthouse 95+” claim appeared only in the old marquee, with
  * no report in the repo. It is not shown.
  */
@@ -26,18 +30,19 @@ export const site = {
   email: "hello@vorq.agency",
   bookPath: "/book",
   description:
-    "Vorq is a design and engineering studio for early-stage teams. Custom websites, redesigns, and MVPs — fixed scope, published prices, and code you own.",
+    "Vorq is Priyanshu Bhardwaj and Ravi Pratap Singh. We design and build websites, redesigns, and MVPs for early-stage teams. Published prices. You own the code.",
 } as const;
 
 export const calendlyUrl =
-  "https://calendly.com/vorqdesign/30min?primary_color=9a3412&hide_gdpr_banner=1&background_color=f4f0e8&text_color=1c1915";
+  "https://calendly.com/vorqdesign/30min?primary_color=141414&hide_gdpr_banner=1&background_color=ffffff&text_color=141414";
 
-export const hero = {
-  kicker: "Design and engineering studio",
-  titleLead: "Websites and MVPs",
-  titleEmphasis: "for early-stage teams.",
-  dek: "Vorq designs and builds custom sites, redesigns, and product MVPs. Fixed scope, a live preview while the work is in progress, and the code is yours when it’s done.",
+export const intro = {
+  title: "We design and build websites and MVPs.",
+  body: "Priyanshu Bhardwaj and Ravi Pratap Singh. Fixed scope, published prices, and you own the code.",
 } as const;
+
+export const contactNote =
+  "Send the work, the deadline, and the budget. You get a fixed scope and a fixed price within 24 hours. Most projects go live in under a week. You own the code.";
 
 export const product = {
   name: "Gradient Forge",
@@ -105,13 +110,12 @@ export const projects = [
   {
     title: "SamaWritten",
     href: "https://www.samawritten.com",
-    kind: "Cardiac wearable",
-    summary:
-      "Advanced Cardiac Wearable — AI-powered heart monitoring. Monitors 20+ conditions on-wrist. Alerts samaritans — no phone needed.",
+    kind: "Vitals and medical ID",
+    summary: "Vitals, medical ID, and contact check-ins.",
     timeline: "Delivered in 2 days",
     tools: ["Next.js", "Framer", "AI"],
-    image: "/images/samawritten.jpg",
-    alt: "SamaWritten cardiac wearable website",
+    image: "/captures/sama.jpg",
+    alt: "SamaWritten homepage: vitals, medical ID, and contact check-ins",
   },
   {
     title: "Aranyoing",
@@ -121,8 +125,8 @@ export const projects = [
       "High-end minimalist portfolio redesign. Complete layout overhaul with premium motion and responsive performance.",
     timeline: "Redesigned in 6 hrs",
     tools: ["React", "GSAP", "UI/UX"],
-    image: "/images/aranyoing.jpg",
-    alt: "Aranyoing portfolio redesign",
+    image: "/captures/aranyoing.jpg",
+    alt: "Aranyo Ray portfolio homepage",
   },
   {
     title: "Open Dev Society",
@@ -132,8 +136,8 @@ export const projects = [
       "Main website development for the global open-source community. Building the future of dev culture together.",
     timeline: "Delivered in 4 days",
     tools: ["Next.js", "Community", "Open source"],
-    image: "/images/ods.jpg",
-    alt: "Open Dev Society community website",
+    image: "/captures/ods.jpg",
+    alt: "Open Dev Society homepage",
   },
   {
     title: "Kine UI",
@@ -143,8 +147,8 @@ export const projects = [
       "Spatial computing UI library for full production spatial interfaces. Redefining interactions in 3D environments.",
     timeline: "Delivered in 2 days",
     tools: ["Spatial UI", "Google Pipeline", "Open source"],
-    image: "/images/kineUI.jpg",
-    alt: "Kine UI spatial interface library",
+    image: "/captures/kine.jpg",
+    alt: "Kine UI homepage, a spatial computing component library",
   },
 ] as const;
 
@@ -224,7 +228,7 @@ export const team = [
     name: "Ravi Pratap Singh",
     role: "Co-Founder · Designer & Developer",
     image: "/cofounder2.jpg",
-    bio: "Obsessed with details. Ensuring every pixel is perfect and every interaction feels seamless and responsive.",
+    bio: "Obsessed with details. Every pixel has to be right, and every interaction has to respond.",
   },
 ] as const;
 
@@ -249,7 +253,6 @@ export const values = [
 
 export const nav = [
   { label: "Work", href: "/#work" },
-  { label: "Services", href: "/#services" },
-  { label: "Process", href: "/#process" },
+  { label: "Prices", href: "/#prices" },
   { label: "Studio", href: "/team" },
 ] as const;
