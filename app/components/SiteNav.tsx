@@ -83,9 +83,10 @@ export default function SiteNav() {
       </Link>
       <nav className="desk-nav" aria-label="Primary">
         {items.map((item) => (
-          <Link
+            <Link
             key={item.href}
             href={item.href}
+            className={item.href === site.bookPath ? "book-link" : undefined}
             aria-current={isCurrent(item.href) ? "page" : undefined}
           >
             {item.label}

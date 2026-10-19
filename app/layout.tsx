@@ -1,14 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Schibsted_Grotesk } from "next/font/google";
+import { Outfit, Syne } from "next/font/google";
 import SiteFooter from "./components/SiteFooter";
 import SiteNav from "./components/SiteNav";
 import { services, site, team } from "@/lib/content";
 import "./globals.css";
 
-const sans = Schibsted_Grotesk({
+const sans = Outfit({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500"],
   variable: "--font-sans",
+  display: "swap",
+});
+
+const display = Syne({
+  subsets: ["latin"],
+  weight: ["500", "700"],
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -38,8 +45,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
-  colorScheme: "light",
+  themeColor: "#12110e",
+  colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
 };
@@ -75,7 +82,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={sans.variable}>
+    <html lang="en" className={`${sans.variable} ${display.variable}`}>
       <body>
         <script
           type="application/ld+json"

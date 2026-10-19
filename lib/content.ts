@@ -34,7 +34,7 @@ export const site = {
 } as const;
 
 export const calendlyUrl =
-  "https://calendly.com/vorqdesign/30min?primary_color=141414&hide_gdpr_banner=1&background_color=ffffff&text_color=141414";
+  "https://calendly.com/vorqdesign/30min?primary_color=12110e&hide_gdpr_banner=1&background_color=efe8d8&text_color=12110e";
 
 export const intro = {
   title: "We design and build websites and MVPs.",

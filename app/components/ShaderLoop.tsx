@@ -21,13 +21,11 @@ export default function ShaderLoop() {
 
   return (
     <>
-      <div className="bleed">
+      <div className="stage-media">
         <video
           ref={videoRef}
           src="/captures/forge.mp4"
           poster="/captures/forge-poster.jpg"
-          width={1280}
-          height={728}
           muted
           loop
           playsInline

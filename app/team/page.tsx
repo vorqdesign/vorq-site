@@ -5,8 +5,7 @@ import { site, team, values } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Studio",
-  description:
-    "Vorq is Priyanshu Bhardwaj and Ravi Pratap Singh. We design and build the work.",
+  description: "Vorq is Priyanshu Bhardwaj and Ravi Pratap Singh.",
   alternates: { canonical: "/team" },
   openGraph: {
     title: "Studio — Vorq",
@@ -17,10 +16,10 @@ export const metadata: Metadata = {
 
 export default function TeamPage() {
   return (
-    <main id="content" className="studio">
-      <header className="intro">
+    <main id="content">
+      <header className="studio-intro">
         <h1>Priyanshu Bhardwaj and Ravi Pratap Singh</h1>
-        <p>No layers and no middlemen. We design and build the work.</p>
+        <p>Two people. We design and build the work.</p>
       </header>
 
       <section className="people" aria-label="People">
@@ -32,7 +31,7 @@ export default function TeamPage() {
                 alt={member.name}
                 fill
                 priority={index === 0}
-                sizes="(max-width: 800px) 100vw, 22rem"
+                sizes="(max-width: 800px) 100vw, 40vw"
               />
             </div>
             <h2>{member.name}</h2>
@@ -43,7 +42,9 @@ export default function TeamPage() {
       </section>
 
       <section className="values" aria-labelledby="values-title">
-        <h2 id="values-title">Values</h2>
+        <h2 id="values-title" className="sr-only">
+          Values
+        </h2>
         {values.map((value) => (
           <article className="value" key={value.title}>
             <h3>{value.title}</h3>
