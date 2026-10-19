@@ -1,196 +1,82 @@
-"use client";
-
-import SiteNav from "../components/SiteNav";
-import SiteFooter from "../components/SiteFooter";
-import LandingInteractions from "../components/LandingInteractions";
-import { motion } from "framer-motion";
+import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
+import { site, team, values } from "@/lib/content";
 
-const teamMembers = [
-    {
-        name: "Priyanshu Bhardwaj",
-        role: "Co-Founder · Designer & Developer",
-        image: "/cofounder1.jpg",
-        bio: "Handling end-to-end execution. From initial concept and design systems to the final line of code and deployment.",
-        index: "01",
-        socials: [
-            { label: "Twitter", href: "#" },
-            { label: "LinkedIn", href: "#" },
-        ],
-    },
-    {
-        name: "Ravi Pratap Singh",
-        role: "Co-Founder · Designer & Developer",
-        image: "/cofounder2.jpg",
-        bio: "Obsessed with details. Ensuring every pixel is perfect and every interaction feels seamless and responsive.",
-        index: "02",
-        socials: [
-            { label: "Instagram", href: "#" },
-            { label: "Behance", href: "#" },
-        ],
-    },
-];
-
-const values = [
-    {
-        title: "Obsessive Quality",
-        desc: "We don't ship until it's pixel-perfect. Good enough is never good enough for us.",
-    },
-    {
-        title: "Radical Transparency",
-        desc: "We build in the open and keep our clients involved at every step of the process.",
-    },
-    {
-        title: "Always Learning",
-        desc: "Technology moves fast. We move faster. We're constantly exploring new tools and techniques.",
-    },
-    {
-        title: "Design Driven",
-        desc: "Design isn't just how it looks, it's how it works. We prioritize user experience above all else.",
-    },
-];
+export const metadata: Metadata = {
+  title: "Studio",
+  description:
+    "Vorq is Priyanshu Bhardwaj and Ravi Pratap Singh — a design and engineering studio. No layers, no middlemen.",
+  alternates: { canonical: "/team" },
+  openGraph: {
+    title: "Studio — Vorq",
+    description:
+      "Priyanshu Bhardwaj and Ravi Pratap Singh. No layers, no middlemen.",
+    url: "/team",
+  },
+};
 
 export default function TeamPage() {
-    return (
-        <main className="min-h-screen bg-[#f5f3ee] text-[#0e0d0b] selection:bg-[#0e0d0b] selection:text-[#f5f3ee]">
-            <div id="cursor" />
-            <div id="cursor-ring"><span id="cursor-label" /></div>
-            <SiteNav />
+  return (
+    <main id="content">
+      <section className="studio-hero wrap">
+        <p className="kicker">The studio</p>
+        <h1>
+          We act <em>as one.</em>
+        </h1>
+        <p className="studio-dek">
+          No layers and no middlemen. Two designers and developers, on the work with you.
+        </p>
+      </section>
 
-            {/* ── HERO ────────────────────────────────── */}
-            <section className="team-hero">
-                <div className="team-container">
-                    {/* Eyebrow tag */}
-                    <motion.div
-                        className="team-tag"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        <span className="team-tag-line" />
-                        Meet the team
-                    </motion.div>
+      <section className="wrap" aria-label="People">
+        <div className="team-grid">
+          {team.map((member, index) => (
+            <article key={member.name} className="member">
+              <div className="portrait">
+                <Image
+                  className="portrait-img"
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  priority={index === 0}
+                  sizes="(max-width: 960px) 92vw, 440px"
+                />
+              </div>
+              <h2>{member.name}</h2>
+              <p className="member-role">{member.role}</p>
+              <p className="member-bio">{member.bio}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
-                    {/* Headline */}
-                    <motion.h1
-                        className="team-h1"
-                        initial={{ opacity: 0, y: 40 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        We act<br />
-                        <em>as one.</em>
-                    </motion.h1>
-
-                    {/* Byline */}
-                    <motion.p
-                        className="team-byline"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        No layers, no middlemen. Just pure craft.
-                        We build in the open and keep clients involved at every step.
-                    </motion.p>
+      <section className="section values" aria-labelledby="values-title">
+        <div className="wrap">
+          <p className="kicker">What we stand for</p>
+          <h2 className="section-title" id="values-title">
+            Studio values.
+          </h2>
+          <div className="value-list">
+            {values.map((value, index) => (
+              <article key={value.title} className="value">
+                <span className="index-num">{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>{value.title}</h3>
+                  <p>{value.body}</p>
                 </div>
-            </section>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            {/* ── TEAM GRID ───────────────────────────── */}
-            <section className="team-members-section">
-                <div className="team-container">
-                    <div className="team-members-grid">
-                        {teamMembers.map((member, i) => (
-                            <motion.article
-                                key={i}
-                                className="team-member-card"
-                                initial={{ opacity: 0, y: 50 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: "-8%" }}
-                                transition={{ duration: 0.75, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                            >
-                                {/* Photo */}
-                                <div className="team-photo-wrap group">
-                                    <div className="team-photo-inner">
-                                        <Image
-                                            src={member.image}
-                                            alt={member.name}
-                                            fill
-                                            unoptimized
-                                            priority={i === 0}
-                                            className="team-photo-img"
-                                        />
-                                        {/* Hover reveal overlay */}
-                                        <div className="team-photo-overlay">
-                                            <div className="team-photo-overlay-content">
-                                                <p className="team-photo-bio">{member.bio}</p>
-                                                <div className="team-photo-socials">
-                                                    {member.socials.map((s) => (
-                                                        <a key={s.label} href={s.href} className="team-social-link">
-                                                            {s.label} ↗
-                                                        </a>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* Decorative index */}
-                                    <span className="team-member-index">{member.index}</span>
-                                </div>
-
-                                {/* Info */}
-                                <div className="team-member-info">
-                                    <h2 className="team-member-name">{member.name}</h2>
-                                    <p className="team-member-role">{member.role}</p>
-                                </div>
-                            </motion.article>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* ── VALUES / DNA ─────────────────────────── */}
-            <section className="team-dna-section">
-                <div className="team-container">
-                    <div className="team-dna-inner">
-                        {/* Sticky label */}
-                        <div className="team-dna-label-col">
-                            <motion.h2
-                                className="team-dna-heading"
-                                initial={{ opacity: 0, x: -30 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                            >
-                                DNA.
-                            </motion.h2>
-                            <p className="team-dna-sub">What we stand for</p>
-                        </div>
-
-                        {/* Values list */}
-                        <div className="team-dna-list-col">
-                            {values.map((item, i) => (
-                                <motion.div
-                                    key={i}
-                                    className="team-dna-item"
-                                    initial={{ opacity: 0, y: 28 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, margin: "-5%" }}
-                                    transition={{ duration: 0.65, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                                >
-                                    <div className="team-dna-item-num">{String(i + 1).padStart(2, "0")}</div>
-                                    <div className="team-dna-item-body">
-                                        <h3 className="team-dna-item-title">{item.title}</h3>
-                                        <p className="team-dna-item-desc">{item.desc}</p>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <SiteFooter />
-            <LandingInteractions />
-        </main>
-    );
+      <div className="wrap studio-close">
+        <p>Start with the work, the deadline, and the budget.</p>
+        <Link className="btn" href={site.bookPath}>
+          Book a call
+        </Link>
+      </div>
+    </main>
+  );
 }
