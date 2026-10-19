@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Syne } from "next/font/google";
-import SiteFooter from "./components/SiteFooter";
-import SiteNav from "./components/SiteNav";
+import SiteChrome from "./components/SiteChrome";
 import { services, site, team } from "@/lib/content";
 import "./globals.css";
 
@@ -91,9 +90,7 @@ export default function RootLayout({
         <a className="skip" href="#content">
           Skip to content
         </a>
-        <SiteNav />
-        {children}
-        <SiteFooter />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

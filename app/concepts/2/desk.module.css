@@ -1,0 +1,220 @@
+.root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 30;
+  background:
+    radial-gradient(1200px 500px at 20% 0%, rgba(255, 244, 220, 0.08), transparent 60%),
+    #2c2924;
+  color: #1c1915;
+  font-family: var(--font-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow: hidden;
+}
+
+.bar {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 0.9rem;
+  background: #141311;
+  color: #f3efe6;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+}
+
+.bar a { color: inherit; }
+.clock { margin-left: auto; opacity: 0.8; }
+.book {
+  color: #141311;
+  background: #f3efe6;
+  text-decoration: none;
+  padding: 0.28rem 0.5rem;
+}
+
+.desktop { position: absolute; inset: 42px 0 0; }
+
+.icons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem;
+  width: 7.5rem;
+}
+
+.icon {
+  display: grid;
+  justify-items: center;
+  gap: 0.3rem;
+  padding: 0.45rem 0.2rem;
+  border: 0;
+  background: transparent;
+  color: #f3efe6;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.glyph {
+  width: 3.1rem;
+  height: 3.1rem;
+  display: grid;
+  place-items: center;
+  background: #f3efe6;
+  color: #1c1915;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+}
+
+.wallpaper {
+  position: absolute;
+  right: 1.4rem;
+  bottom: 1.2rem;
+  margin: 0;
+  color: rgba(243, 239, 230, 0.72);
+  text-align: right;
+  font-size: 0.92rem;
+}
+
+.wallpaper a { display: block; color: #f3efe6; margin-top: 0.2rem; }
+
+.window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  min-width: 280px;
+  max-height: calc(100dvh - 90px);
+  background: #f6f1e7;
+  border: 1px solid #1c1915;
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 36px;
+  padding: 0 0.45rem 0 0.75rem;
+  background: #1c1915;
+  color: #f6f1e7;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.title button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 0.2rem 0.35rem;
+}
+
+.body { padding: 0.9rem; overflow: auto; min-height: 0; }
+
+.work {
+  display: grid;
+  grid-template-columns: 11rem 1fr;
+  gap: 0.8rem;
+  min-height: 280px;
+}
+
+.list { display: flex; flex-direction: column; gap: 0.25rem; }
+
+.list button {
+  text-align: left;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  padding: 0.4rem 0.2rem;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(28, 25, 21, 0.15);
+}
+
+.list button[data-on="true"] { font-weight: 500; }
+
+.shot {
+  position: relative;
+  min-height: 220px;
+  background: #ddd6c8;
+}
+
+.shot img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+
+.shot p, .note { margin: 0.45rem 0 0; font-size: 0.92rem; }
+
+.priceRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-top: 1px solid rgba(28, 25, 21, 0.18);
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.people { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+.people img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block; }
+.people h3 { margin: 0.4rem 0 0; font-size: 1rem; }
+.people p { margin: 0.15rem 0 0; font-size: 0.82rem; }
+
+.phone { display: none; }
+
+@media (max-width: 800px) {
+  .clock { display: none; }
+  .desktop { display: none; }
+  .phone {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 42px);
+  }
+  .apps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem 0.8rem;
+    padding: 1.4rem 1.2rem 2rem;
+    align-content: start;
+  }
+  .phoneLine {
+    grid-column: 1 / -1;
+    margin: 0.4rem 0 0.6rem;
+    color: rgba(243, 239, 230, 0.78);
+  }
+  .apps button {
+    display: grid;
+    justify-items: center;
+    gap: 0.45rem;
+    border: 0;
+    background: transparent;
+    color: #f3efe6;
+    font: inherit;
+  }
+  .apps .glyph { width: 4.2rem; height: 4.2rem; font-size: 1.3rem; }
+  .sheet {
+    flex: 1;
+    margin: 0 0.7rem 0.7rem;
+    background: #f6f1e7;
+    color: #1c1915;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .sheet header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 0.8rem;
+    border-bottom: 1px solid rgba(28, 25, 21, 0.15);
+  }
+  .sheet header button { border: 0; background: none; font: inherit; cursor: pointer; }
+  .sheet .body { overflow: auto; }
+  .sheet a { display: block; color: inherit; margin-top: 0.35rem; }
+}
