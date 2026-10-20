@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import Script from "next/script";
 import VorqNav from "../components/VorqNav";
 import { VorqFooter } from "../components/VorqFooter";
 import { DrawnCircle, Reveal } from "../components/Motion";
 import { site } from "../content";
 import { BookingPanel } from "./BookingPanel";
+import { pageMeta } from "../seo";
 
-export const metadata: Metadata = {
-  title: "Book a call | VORQ",
-  description: "Book a free 30-minute call with VORQ. A fixed scope and a fixed price within 24 hours.",
-};
+export const metadata = pageMeta({
+  title: "Book a free call",
+  description: "Book a free 30-minute call with VORQ. Tell us what you're building and get a fixed scope and a fixed price within 24 hours.",
+  path: "/book",
+});
 
 export default async function BookPage({ searchParams }: { searchParams: Promise<{ scope?: string; est?: string }> }) {
   const { scope, est } = await searchParams;

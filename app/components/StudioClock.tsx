@@ -13,7 +13,7 @@ export function StudioClock() {
   const time = useSyncExternalStore(everyMinute, () => indiaTime.format(new Date()), () => null);
   if (!time) return null;
   return (
-    <span className="font-mono text-[12px] uppercase tracking-[0.14em] text-ink/45">
+    <span className="whitespace-nowrap font-mono text-[12px] uppercase tracking-[0.14em] text-ink/45">
       India · <span className="tabular-nums text-ink/70">{time}</span> IST
     </span>
   );

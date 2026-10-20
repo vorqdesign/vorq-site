@@ -27,7 +27,7 @@ export function ProcessSection() {
           {steps.map((s, i) => (
             <li key={s.title} className="h-full">
               <Reveal delay={i * 0.06} className="shell flex h-full flex-col">
-                <div className="panel flex-1 p-6">
+                <div className="panel flex-1 px-3 py-6 sm:px-6">
                   <div className="flex items-center justify-between">
                     <span className="grid h-9 w-9 place-items-center rounded-full bg-mist font-mono text-[12px] text-ink/60">
                       0{i + 1}
@@ -42,7 +42,7 @@ export function ProcessSection() {
                   <h3 className="mt-10 text-[28px] font-medium leading-none tracking-[-0.035em]">{s.title}</h3>
                   <p className="mt-3 text-[15px] leading-relaxed text-muted">{s.body}</p>
                 </div>
-                <p className="well mt-2 px-5 py-3.5 font-mono text-[12px] uppercase tracking-[0.12em] text-ink/55">{s.when}</p>
+                <p className="well mt-2 px-2.5 sm:px-5 py-3.5 font-mono text-[12px] uppercase tracking-[0.12em] text-ink/55">{s.when}</p>
               </Reveal>
             </li>
           ))}

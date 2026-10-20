@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import VorqNav from "../components/VorqNav";
 import { VorqFooter } from "../components/VorqFooter";
 import { Reveal } from "../components/Motion";
 import { FeaturedTool } from "../components/ToolsSection";
 import { site, tools } from "../content";
+import { pageMeta } from "../seo";
 
-export const metadata: Metadata = {
-  title: "Lab | VORQ",
-  description: "Micro-SaaS tools by VORQ for people who build for the web, starting with Gradient Forge.",
-};
+export const metadata = pageMeta({
+  title: "Lab: tools for people who build for the web",
+  description: "Micro-SaaS tools built and sold by VORQ, starting with Gradient Forge, a shader background studio for Next.js.",
+  path: "/lab",
+});
 
 export default function LabPage() {
   return (
@@ -46,7 +47,7 @@ export default function LabPage() {
 
         <section className="vorq-container mt-24 md:mt-36">
           <Reveal className="shell">
-            <div className="panel-ink grid gap-8 p-8 md:grid-cols-[1.4fr_1fr] md:items-end md:p-14">
+            <div className="panel-ink grid gap-8 px-4 py-8 sm:px-8 md:grid-cols-[1.4fr_1fr] md:items-end md:p-14">
               <div>
                 <p className="eyebrow text-accent-soft">Next in the Lab</p>
                 <h2 className="mt-4 text-[clamp(32px,4vw,56px)] leading-[1] tracking-[-0.04em]">

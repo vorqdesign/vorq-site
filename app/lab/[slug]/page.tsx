@@ -6,9 +6,12 @@ import VorqNav from "../../components/VorqNav";
 import { VorqFooter } from "../../components/VorqFooter";
 import { Reveal } from "../../components/Motion";
 import { ToolStage } from "../../components/ToolsSection";
-import { tools } from "../../content";
+import { site, tools } from "../../content";
+import { JsonLd, orgId, pageMeta } from "../../seo";
 
 type Props = { params: Promise<{ slug: string }> };
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return tools.map((t) => ({ slug: t.slug }));
@@ -17,7 +20,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const tool = tools.find((t) => t.slug === slug);
-  return tool ? { title: `${tool.name} | VORQ Lab`, description: tool.pitch } : {};
+  return tool ? pageMeta({ title: `${tool.name}: ${tool.tagline}`, description: tool.pitch, path: `/lab/${tool.slug}` }) : {};
 }
 
 export default async function ToolPage({ params }: Props) {
@@ -27,6 +30,24 @@ export default async function ToolPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd
+        data={{
+          "@type": "SoftwareApplication",
+          name: tool.name,
+          description: tool.pitch,
+          url: tool.href,
+          applicationCategory: "DesignApplication",
+          operatingSystem: "Web",
+          publisher: { "@id": orgId },
+          mainEntityOfPage: `${site.url}/lab/${tool.slug}`,
+          offers: tool.plans.map((p) => ({
+            "@type": "Offer",
+            name: p.name,
+            price: p.price.replace(/[^0-9.]/g, ""),
+            priceCurrency: "USD",
+          })),
+        }}
+      />
       <VorqNav />
       <main className="pb-24 pt-[120px] md:pb-32 md:pt-[150px]">
         <section className="vorq-container">
@@ -74,7 +95,7 @@ export default async function ToolPage({ params }: Props) {
             {tool.steps.map((s, i) => (
               <li key={s.title} className="h-full">
                 <Reveal delay={i * 0.08} className="shell h-full">
-                  <div className="panel h-full p-7 md:p-9">
+                  <div className="panel h-full px-3.5 py-7 sm:px-7 md:p-9">
                     <span className="grid h-9 w-9 place-items-center rounded-full bg-mist font-mono text-[12px] text-ink/60">0{i + 1}</span>
                     <h3 className="mt-10 text-2xl font-medium tracking-[-0.03em] md:text-[28px]">{s.title}</h3>
                     <p className="mt-3 leading-relaxed text-muted">{s.body}</p>
@@ -129,7 +150,7 @@ export default async function ToolPage({ params }: Props) {
 
         <section className="vorq-container mt-24 md:mt-36">
           <Reveal className="shell">
-            <div className="panel-ink grid gap-8 p-8 md:grid-cols-[1.4fr_1fr] md:items-end md:p-14">
+            <div className="panel-ink grid gap-8 px-4 py-8 sm:px-8 md:grid-cols-[1.4fr_1fr] md:items-end md:p-14">
               <div>
                 <p className="eyebrow text-accent-soft">Built by VORQ</p>
                 <h2 className="mt-4 text-[clamp(32px,4vw,56px)] leading-[1] tracking-[-0.04em]">

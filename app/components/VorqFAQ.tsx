@@ -34,7 +34,7 @@ export function VorqFAQ() {
           {faqs.map((item, i) => {
             const isOpen = open === i;
             return (
-              <div key={item.q} className={`panel transition-shadow duration-300 ${isOpen ? "" : "hover:shadow-md"}`}>
+              <div key={item.q} className={`panel transition-shadow duration-300 ${isOpen ?"" : "hover:shadow-md"}`}>
                 <h3>
                   <button
                     onClick={() => setOpen(isOpen ? null : i)}

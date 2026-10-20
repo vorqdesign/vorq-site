@@ -270,7 +270,7 @@ export function ScopeBuilder() {
         <Reveal>
           <div className="shell grid gap-2 lg:grid-cols-[0.85fr_1.15fr]">
             {/* Controls */}
-            <div className="panel p-5 md:p-8">
+            <div className="panel px-2.5 py-5 sm:px-5 md:p-8">
               <fieldset>
                 <legend className="font-mono text-[12px] uppercase tracking-[0.14em] text-ink/45">01 · The build</legend>
                 <div className="mt-3 grid gap-2">
@@ -328,7 +328,7 @@ export function ScopeBuilder() {
               <div className="panel p-2">
                 <Blueprint base={base} picked={picked} support={support} />
               </div>
-              <div className="panel-ink flex-1 p-6 md:p-8">
+              <div className="panel-ink flex-1 px-3 py-6 sm:px-6 md:p-8">
                 <div className="flex items-start justify-between gap-6">
                   <div>
                     <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-white/45">Estimate</p>

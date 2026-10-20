@@ -54,13 +54,14 @@ export type Project = {
 /** The Work section, its nav link and footer column all hide while this is empty. */
 export const projects: Project[] = [];
 
+/** `note` shows under each link in the mobile menu. */
 export const nav = [
-  ...(projects.length ? [{ label: "Work", href: "/#work" }] : []),
-  { label: "Lab", href: "/lab" },
-  { label: "Services", href: "/#services" },
-  { label: "Process", href: "/#process" },
-  { label: "FAQ", href: "/#faq" },
-  { label: "Blog", href: "/blog" },
+  ...(projects.length ? [{ label: "Work", href: "/#work", note: "Recent launches" }] : []),
+  { label: "Lab", href: "/lab", note: "Tools we build and sell" },
+  { label: "Services", href: "/#services", note: "Packages and pricing" },
+  { label: "Process", href: "/#process", note: "From brief to launch" },
+  { label: "FAQ", href: "/#faq", note: "Questions, answered" },
+  { label: "Blog", href: "/blog", note: "Case studies and notes" },
 ];
 
 /**

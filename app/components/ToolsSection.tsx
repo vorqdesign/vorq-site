@@ -38,7 +38,7 @@ export function ToolStage({ tool }: { tool: Tool }) {
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
-      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-8 p-6 text-white md:flex-row md:items-end md:justify-between md:p-12">
+      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-8 px-3 py-6 text-white sm:px-6 md:flex-row md:items-end md:justify-between md:p-12">
         <div className="max-w-xl">
           <p className="eyebrow text-white/70">{tool.name}</p>
           <p className="mt-4 text-[clamp(32px,4.6vw,72px)] font-medium leading-[0.98] tracking-[-0.04em]">{tool.tagline}.</p>
@@ -78,7 +78,7 @@ export function FeaturedTool({ tool, detailHref }: { tool: Tool; detailHref?: st
       <div className="panel relative aspect-[4/5] overflow-hidden bg-night sm:aspect-[16/10] lg:aspect-[16/8]">
         <ToolStage tool={tool} />
       </div>
-      <div className="well mt-2 flex flex-col gap-5 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="well mt-2 flex flex-col gap-5 px-2.5 sm:px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-3">
           <span className="rounded-full bg-[#e8f8ef] px-3 py-1 text-[12px] font-medium text-[#0b7a45]">{tool.status}</span>
           <span className="text-lg font-medium">{tool.name}</span>

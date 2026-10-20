@@ -1,13 +1,14 @@
-import type { Metadata } from "next";
 import VorqNav from "../components/VorqNav";
 import { VorqFooter } from "../components/VorqFooter";
 import { Reveal } from "../components/Motion";
 import { Journal } from "./Journal";
+import { pageMeta } from "../seo";
 
-export const metadata: Metadata = {
-  title: "Journal | VORQ",
+export const metadata = pageMeta({
+  title: "Journal: case studies and notes from the studio",
   description: "Case studies, engineering notes and plain advice on building landing pages, dashboards, web apps and mobile apps.",
-};
+  path: "/blog",
+});
 
 export default function BlogPage() {
   return (

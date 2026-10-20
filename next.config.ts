@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  // Hide the floating "N" badge in dev; build and runtime errors still show.
+  devIndicators: false,
   // The studio page was retired; keep old links working.
   redirects: async () => [{ source: "/team", destination: "/", permanent: true }],
 };

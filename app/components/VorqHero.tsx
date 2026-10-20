@@ -137,7 +137,7 @@ function Inspector({
 
   const row = "flex items-center justify-between gap-3 border-t border-black/[0.06] py-2.5";
   return (
-    <div className="panel flex h-full flex-col p-4 text-[13px]">
+    <div className="panel flex h-full flex-col px-2 py-4 sm:px-4 text-[13px]">
       <div className="flex items-center justify-between pb-2">
         <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink/45">Inspector</span>
         <StudioClock />
@@ -228,33 +228,28 @@ export function VorqHero() {
     return () => window.removeEventListener("resize", measure);
   }, []);
 
-  const corner = "absolute h-4 w-4 border-ink/25";
-
   return (
     <section className="section-pad relative overflow-hidden bg-white pt-5 md:pt-6">
       <div className="vorq-container">
         {/*
-          The stage: a hatched frame with crop marks and spec labels, holding the wordmark's place.
+          The stage: a hatched frame with spec labels, holding the wordmark's place.
           The flat word shows until the 3D one is live; the frame fades as the word lifts into the nav.
         */}
-        <div className="relative aspect-[1.4/1] sm:aspect-[2.2/1] lg:aspect-[3/1]">
+        <div className="relative -mx-2 aspect-[1.5/1] sm:mx-0 sm:aspect-[2.2/1] lg:aspect-[3/1]">
           <motion.div aria-hidden="true" style={{ opacity: shadow }} className="absolute inset-0">
             <div className="hatch absolute inset-0 rounded-[32px]" />
-            <span className={`${corner} left-4 top-4 border-l border-t`} />
-            <span className={`${corner} right-4 top-4 border-r border-t`} />
-            <span className={`${corner} bottom-4 left-4 border-b border-l`} />
-            <span className={`${corner} bottom-4 right-4 border-b border-r`} />
             <div className="absolute bottom-[10%] left-1/2 h-[10%] w-[56%] -translate-x-1/2 rounded-[50%] bg-black/10 blur-2xl" />
           </motion.div>
 
-          <motion.div style={{ opacity: shadow }} className="absolute inset-0 flex flex-col justify-between p-6 md:p-9">
+          <motion.div style={{ opacity: shadow }} className="absolute inset-0 flex flex-col justify-between px-3 py-3 sm:px-6 sm:py-6 md:p-9">
             <div className="flex items-start justify-between gap-4">
-              <p className="flex items-center gap-2.5 rounded-full bg-white px-3.5 py-1.5 text-[12px] text-ink/70 ring-1 ring-black/[0.05] md:text-[13px]">
+              <p className="flex items-center gap-2 rounded-full bg-white px-2.5 py-1 text-[11px] text-ink/70 ring-1 ring-black/[0.05] sm:gap-2.5 sm:px-3.5 sm:py-1.5 sm:text-[12px] md:text-[13px]">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
                 </span>
-                Independent design engineering studio
+                <span className="sm:hidden">Design engineering studio</span>
+                <span className="hidden sm:inline">Independent design engineering studio</span>
               </p>
               <span className="hidden pt-1.5 sm:block lg:hidden">
                 <StudioClock />
@@ -265,19 +260,13 @@ export function VorqHero() {
               aria-hidden="true"
             >
               <span className="hidden sm:block">Web · Mobile · Tools</span>
-              <span className="ml-auto flex items-center gap-3">
-                Scroll
-                <span className="relative h-px w-10 overflow-hidden bg-ink/15">
-                  <span className="absolute inset-y-0 left-0 w-1/2 animate-[scrollhint_1.8s_ease-in-out_infinite] bg-ink" />
-                </span>
-              </span>
             </div>
           </motion.div>
 
           {/* The artboard the wordmark sits on, selected the way it would be in a design tool. */}
           <div
             ref={artboardRef}
-            className="absolute bottom-12 left-4 right-4 top-16 md:bottom-[92px] md:left-9 md:right-9 md:top-[76px] lg:right-[332px]"
+            className="absolute bottom-3 left-2 right-2 top-10 sm:bottom-12 sm:left-4 sm:right-4 sm:top-16 md:bottom-[92px] md:left-9 md:right-9 md:top-[76px] lg:right-[332px]"
           >
             <motion.div style={{ opacity: shadow }} className="pointer-events-none absolute inset-0 hidden sm:block" aria-hidden="true">
               <div className="absolute inset-0 border border-ink/30" />
@@ -332,7 +321,7 @@ export function VorqHero() {
 
           {/* The pitch, set like a pricing card: the offer on a panel, the promises in the well. */}
           <motion.div {...rise(0.6)} className="shell self-start">
-            <div className="panel p-6 md:p-7">
+            <div className="panel px-3 py-6 sm:px-6 md:p-7">
               <p className="text-[17px] leading-[1.75] text-muted">
                 Design engineering for ambitious founders. We design in code and ship custom <Logo i={0} /> builds with
                 production-grade motion in <Logo i={1} /> and <Logo i={2} />.
@@ -354,7 +343,7 @@ export function VorqHero() {
                 </Link>
               </div>
             </div>
-            <ul className="well mt-2 grid grid-cols-1 gap-x-4 gap-y-2.5 px-5 py-4 text-[14px] text-ink/70 sm:grid-cols-2">
+            <ul className="well mt-2 grid grid-cols-1 gap-x-4 gap-y-2.5 px-2.5 sm:px-5 py-4 text-[14px] text-ink/70 sm:grid-cols-2">
               {["Fixed-price projects", "Quote in 24 hours", "Live preview, day one", "You own the code"].map((f) => (
                 <li key={f} className="flex items-center gap-2.5">
                   <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-white text-ink">

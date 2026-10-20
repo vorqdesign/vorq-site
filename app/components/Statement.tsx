@@ -140,7 +140,7 @@ export function Statement() {
                       <span className="font-mono text-[12px] text-ink/40">0{i + 1}</span>
                     </div>
                   </div>
-                  <p className="well mt-2 flex-1 px-5 py-5 text-[15px] leading-relaxed text-muted">{p.body}</p>
+                  <p className="well mt-2 flex-1 px-2.5 sm:px-5 py-5 text-[15px] leading-relaxed text-muted">{p.body}</p>
                 </div>
               </Reveal>
             );

@@ -8,8 +8,12 @@ import ShareButtons from "../../components/ShareButtons";
 import { Cover } from "../Cover";
 import { Meta, PostCard } from "../PostCard";
 import { posts } from "../posts";
+import { site } from "../../content";
+import { JsonLd, orgId, pageMeta } from "../../seo";
 
 type Props = { params: Promise<{ slug: string }> };
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return posts.map((p) => ({ slug: p.slug }));
@@ -19,11 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = posts.find((p) => p.slug === slug);
   if (!post) return {};
-  return {
-    title: `${post.title} | VORQ`,
-    description: post.excerpt,
-    openGraph: { type: "article", title: post.title, description: post.excerpt, publishedTime: post.date },
-  };
+  return pageMeta({ title: post.title, description: post.excerpt, path: `/blog/${post.slug}`, article: { publishedTime: post.date } });
 }
 
 export default async function PostPage({ params }: Props) {
@@ -37,6 +37,22 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd
+        data={{
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.excerpt,
+          datePublished: post.date,
+          dateModified: post.date,
+          articleSection: post.kind,
+          timeRequired: `PT${post.minutes}M`,
+          url: `${site.url}/blog/${post.slug}`,
+          mainEntityOfPage: `${site.url}/blog/${post.slug}`,
+          image: `${site.url}/blog/${post.slug}/opengraph-image`,
+          author: { "@id": orgId },
+          publisher: { "@id": orgId },
+        }}
+      />
       <VorqNav />
       <main className="pb-24 pt-[120px] md:pb-32 md:pt-[150px]">
         <article>
@@ -74,7 +90,7 @@ export default async function PostPage({ params }: Props) {
               <div className="shell">
                 <dl className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
                   {post.facts.map((f) => (
-                    <div key={f.label} className="panel p-5">
+                    <div key={f.label} className="panel px-2.5 py-5 sm:px-5">
                       <dt className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink/45">{f.label}</dt>
                       <dd className="mt-2 text-lg font-medium tracking-[-0.02em]">{f.value}</dd>
                     </div>
@@ -106,7 +122,7 @@ export default async function PostPage({ params }: Props) {
 
         <Reveal className="vorq-container mt-20 md:mt-28">
           <div className="shell">
-            <div className="panel-ink grid gap-8 p-8 md:grid-cols-[1.4fr_1fr] md:items-end md:p-14">
+            <div className="panel-ink grid gap-8 px-4 py-8 sm:px-8 md:grid-cols-[1.4fr_1fr] md:items-end md:p-14">
               <div>
                 <p className="eyebrow text-accent-soft">Work with us</p>
                 <h2 className="mt-4 text-[clamp(32px,4vw,56px)] leading-[1] tracking-[-0.04em]">Have something like this in mind?</h2>

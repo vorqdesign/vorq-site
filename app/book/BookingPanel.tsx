@@ -106,7 +106,7 @@ export function BookingPanel({ calendly, scope, estimate }: { calendly: string; 
       <div className="order-2 lg:order-1 lg:sticky lg:top-28 lg:self-start">
         {scope && (
           <div className="shell mb-4">
-            <div className="panel flex items-start justify-between gap-4 p-5">
+            <div className="panel flex items-start justify-between gap-4 px-2.5 py-5 sm:px-5">
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink/45">Your scope</p>
                 <p className="mt-2 text-lg font-medium leading-snug">{scope}</p>
@@ -127,7 +127,7 @@ export function BookingPanel({ calendly, scope, estimate }: { calendly: string; 
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="panel p-6 md:p-7"
+              className="panel px-3 py-6 sm:px-6 md:p-7"
             >
               <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink/45">
                 {booked && (
@@ -152,7 +152,7 @@ export function BookingPanel({ calendly, scope, estimate }: { calendly: string; 
               </ol>
             </motion.div>
           </AnimatePresence>
-          <ul className="well mt-2 grid gap-2.5 px-5 py-4 text-[14px] text-ink/70 sm:grid-cols-2">
+          <ul className="well mt-2 grid gap-2.5 px-2.5 sm:px-5 py-4 text-[14px] text-ink/70 sm:grid-cols-2">
             {perks.map((p) => (
               <li key={p} className="flex items-center gap-2.5">
                 <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-white text-accent">

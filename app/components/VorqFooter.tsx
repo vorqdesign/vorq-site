@@ -124,7 +124,7 @@ export function VorqFooter() {
       <div className="vorq-container">
         {/* Call to action */}
         <div className="shell">
-          <div className="panel-ink relative isolate grid items-center gap-12 overflow-hidden px-6 py-12 md:px-12 md:py-16 lg:grid-cols-[1fr_auto] lg:gap-16">
+          <div className="panel-ink relative isolate grid items-center gap-12 overflow-hidden px-3 sm:px-6 py-12 md:px-12 md:py-16 lg:grid-cols-[1fr_auto] lg:gap-16">
             <div
               aria-hidden="true"
               className="absolute inset-0 -z-10 bg-[repeating-linear-gradient(135deg,rgb(255_255_255/0.07)_0_1px,transparent_1px_8px)] [mask-image:radial-gradient(60%_90%_at_88%_50%,#000_20%,transparent_75%)]"
@@ -160,7 +160,7 @@ export function VorqFooter() {
               <li key={title}>
                 <Link
                   href={href}
-                  className="panel group flex h-full items-center gap-4 p-4 transition-colors duration-200 hover:bg-mist md:p-5"
+                  className="panel group flex h-full items-center gap-4 px-2 py-4 sm:px-4 transition-colors duration-200 hover:bg-mist md:p-5"
                 >
                   <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-mist transition-colors duration-200 group-hover:bg-ink group-hover:text-white">
                     <Icon className="h-5 w-5" strokeWidth={1.8} />
@@ -177,7 +177,7 @@ export function VorqFooter() {
 
         {/* Footer proper: the studio on the left, the links grouped on the right. */}
         <div className="shell mt-4">
-          <div className="panel flex flex-col gap-12 p-6 md:p-10 lg:flex-row lg:justify-between">
+          <div className="panel flex flex-col gap-12 px-3 py-6 sm:px-6 md:p-10 lg:flex-row lg:justify-between">
             <div className="max-w-sm">
               <p className="font-wordmark text-[40px] leading-none">VORQ</p>
               <p className="mt-4 leading-relaxed text-muted">
@@ -215,9 +215,12 @@ export function VorqFooter() {
                 ))}
             </div>
           </div>
-          <div className="well mt-2 flex flex-col gap-1 px-5 py-3.5 text-sm text-ink/50 sm:flex-row sm:items-center sm:justify-between">
-            <p>© {new Date().getFullYear()} VORQ. All rights reserved.</p>
-            <p>Based in India. Building with founders everywhere.</p>
+          <div className="well mt-2 flex flex-col gap-1 px-2.5 sm:px-5 py-3.5 text-sm text-ink/50 sm:flex-row sm:items-center sm:justify-between">
+            <p>© {new Date().getFullYear()} VORQ. Based in India, building with founders everywhere.</p>
+            <p className="flex gap-5">
+              <Link href="/terms" className="transition-colors hover:text-ink">Terms</Link>
+              <Link href="/privacy" className="transition-colors hover:text-ink">Privacy</Link>
+            </p>
           </div>
         </div>
       </div>

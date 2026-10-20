@@ -22,6 +22,8 @@ export type Post = {
 };
 
 export const kinds: Kind[] = ["Case study", "Engineering", "Studio"];
+/** One colour per kind, from the hero palette. Used on share images. */
+export const kindColor: Record<Kind, string> = { "Case study": "#8b3dff", Engineering: "#2f6bff", Studio: "#00a37a" };
 
 const price = (id: string) => usd(services.find((s) => s.id === id)!.price);
 

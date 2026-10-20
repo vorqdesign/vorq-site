@@ -3,6 +3,8 @@ import { Archivo, Caveat, Geist_Mono, Henny_Penny, Sekuya } from "next/font/goog
 import "./globals.css";
 import Preloader from "./components/Preloader";
 import { MotionProvider } from "./components/Motion";
+import { site } from "./content";
+import { description, JsonLd, siteGraph } from "./seo";
 
 const archivo = Archivo({ variable: "--font-archivo", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -10,17 +12,15 @@ const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin"], weight: [
 const hennypenny = Henny_Penny({ variable: "--font-hennypenny", subsets: ["latin"], weight: ["400"] });
 const sekuya = Sekuya({ variable: "--font-sekuya", subsets: ["latin"], weight: ["400"], adjustFontFallback: false });
 
-const title = "VORQ | Design engineering studio";
-const description =
-  "VORQ designs and builds landing pages, web apps, dashboards and mobile apps. Fixed prices, custom-built, and you own the code.";
-
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.vorq.agency"),
-  title,
+  metadataBase: new URL(site.url),
+  title: { default: "VORQ | Design engineering studio", template: "%s | VORQ" },
   description,
-  openGraph: { type: "website", url: "/", title, description, images: ["/banner.png"] },
-  twitter: { card: "summary_large_image", title, description, images: ["/banner.png"] },
-  icons: { icon: "/logo.svg" },
+  applicationName: site.name,
+  openGraph: { type: "website", url: "/", siteName: site.name, locale: "en_US", title: "VORQ | Design engineering studio", description },
+  twitter: { card: "summary_large_image", title: "VORQ | Design engineering studio", description },
+  robots: { index: true, follow: true, googleBot: { "max-image-preview": "large", "max-snippet": -1 } },
+  icons: { icon: "/logo.svg", apple: "/apple-icon" },
 };
 
 // Runs before paint so a repeat visit in the same tab never flashes the preloader.
@@ -35,6 +35,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body
         className={`${archivo.variable} ${geistMono.variable} ${caveat.variable} ${hennypenny.variable} ${sekuya.variable} antialiased`}
       >
+        <JsonLd data={siteGraph} />
         <MotionProvider>
           <Preloader />
           {children}

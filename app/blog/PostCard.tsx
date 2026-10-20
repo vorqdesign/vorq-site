@@ -24,7 +24,7 @@ export function FeaturedPost({ post }: { post: Post }) {
           <Cover id={post.cover} priority />
         </div>
       </div>
-      <div className="well flex flex-col justify-between gap-10 p-6 md:p-10">
+      <div className="well flex flex-col justify-between gap-10 px-3 py-6 sm:px-6 md:p-10">
         <Meta post={post} />
         <div>
           <h2 className="text-[clamp(28px,3vw,44px)] leading-[1.05] tracking-[-0.035em]">{post.title}</h2>
@@ -47,7 +47,7 @@ export function PostCard({ post }: { post: Post }) {
           <Cover id={post.cover} />
         </div>
       </div>
-      <div className="well mt-2 flex flex-1 flex-col p-5 md:p-6">
+      <div className="well mt-2 flex flex-1 flex-col px-2.5 py-5 sm:px-5 md:p-6">
         <Meta post={post} />
         <h3 className="mt-4 text-xl font-medium leading-snug tracking-[-0.02em] decoration-ink/20 underline-offset-4 group-hover:underline md:text-[22px]">
           {post.title}

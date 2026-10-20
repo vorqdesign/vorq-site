@@ -11,10 +11,14 @@ import { StackStrip } from "./components/StackStrip";
 import { StudioSection } from "./components/StudioSection";
 import { VorqFAQ } from "./components/VorqFAQ";
 import { VorqFooter } from "./components/VorqFooter";
+import { homeGraph, JsonLd } from "./seo";
+
+export const metadata = { alternates: { canonical: "/" } };
 
 export default function VorqPage() {
   return (
     <>
+      <JsonLd data={homeGraph} />
       <VorqNav overHero />
       <main>
         <VorqHero />

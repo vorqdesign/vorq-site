@@ -10,7 +10,7 @@ export function StackStrip() {
           <div className="overflow-hidden rounded-[22px] [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]">
             <ul className="marquee flex w-max items-center gap-2 py-1">
               {row.map((t, i) => (
-                <li key={i} aria-hidden={i >= stack.length} className="panel flex shrink-0 items-center gap-3 rounded-full px-5 py-3">
+                <li key={i} aria-hidden={i >= stack.length} className="panel flex shrink-0 items-center gap-3 rounded-full px-2.5 sm:px-5 py-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={`https://cdn.simpleicons.org/${t.slug}`}

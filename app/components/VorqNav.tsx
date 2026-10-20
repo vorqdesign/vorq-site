@@ -3,8 +3,9 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { nav } from "../content";
+import { nav, site } from "../content";
 import { morphDistance } from "./logoMorph";
+import { StudioClock } from "./StudioClock";
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
@@ -118,29 +119,63 @@ export default function VorqNav({ overHero = false }: { overHero?: boolean }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:hidden fixed inset-x-0 top-[72px] md:top-[88px] h-[calc(100dvh-72px)] md:h-[calc(100dvh-88px)] bg-white"
+            className="lg:hidden fixed inset-x-0 top-[72px] md:top-[88px] h-[calc(100dvh-72px)] md:h-[calc(100dvh-88px)] overflow-y-auto bg-white"
           >
-            <nav className="vorq-container flex h-full flex-col pt-6 pb-10" aria-label="Mobile">
-              {nav.map((link, i) => (
-                <motion.div
-                  key={link.label}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.04 * i, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="block py-3 text-[40px] font-medium leading-tight tracking-[-0.03em]"
-                  >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
-              <Link href="/book" onClick={() => setOpen(false)} className="btn btn-dark mt-auto w-full">
-                Book a free call
-              </Link>
-            </nav>
+            <div className="vorq-container flex min-h-full flex-col gap-3 pb-8 pt-2">
+              <nav aria-label="Mobile" className="shell">
+                <ul className="panel px-1.5 py-1">
+                  {nav.map((link, i) => (
+                    <motion.li
+                      key={link.label}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.04 * i, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                      className="border-t border-black/[0.06] first:border-t-0"
+                    >
+                      <Link
+                        href={link.href}
+                        onClick={() => setOpen(false)}
+                        className="group flex items-center gap-4 rounded-2xl px-3 py-3.5 transition-colors hover:bg-mist"
+                      >
+                        <span className="font-mono text-[11px] text-accent">0{i + 1}</span>
+                        <span className="flex-1">
+                          <span className="block text-[28px] font-medium leading-none tracking-[-0.03em]">{link.label}</span>
+                          <span className="mt-1.5 block text-[13px] text-muted">{link.note}</span>
+                        </span>
+                        <span className="h-2 w-2 rounded-full bg-ink/10 transition-colors group-hover:bg-accent" aria-hidden="true" />
+                      </Link>
+                    </motion.li>
+                  ))}
+                </ul>
+              </nav>
+
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.04 * nav.length, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                className="shell"
+              >
+                <div className="panel-ink p-5">
+                  <p className="eyebrow text-white/45">Start a project</p>
+                  <p className="mt-3 text-[22px] leading-tight tracking-[-0.02em]">Free 30-minute call. A fixed quote within 24 hours.</p>
+                  <div className="mt-5 grid gap-2">
+                    <Link href="/book" onClick={() => setOpen(false)} className="btn btn-white btn-sm w-full">
+                      Book a free call
+                    </Link>
+                    <Link href="/#scope" onClick={() => setOpen(false)} className="btn btn-ghost-dark btn-sm w-full">
+                      Get a price
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+
+              <div className="mt-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-2 pt-3">
+                <a href={`mailto:${site.email}`} className="text-[15px] underline decoration-ink/20 underline-offset-4">
+                  {site.email}
+                </a>
+                <StudioClock />
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

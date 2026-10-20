@@ -93,7 +93,7 @@ function PriceCard({ s, index }: { s: Service; index: number }) {
   return (
     <div className="shell flex h-full flex-col">
       {/* The raised panel: what it is and what it looks like. */}
-      <div className="panel p-6">
+      <div className="panel px-3 py-6 sm:px-6">
         <div className="flex items-center justify-between">
           <span className="font-mono text-[12px] text-ink/40">0{index + 1}</span>
           <span className="rounded-full bg-mist px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-ink/55">
@@ -108,7 +108,7 @@ function PriceCard({ s, index }: { s: Service; index: number }) {
       </div>
 
       {/* The shell: the price and the plain facts. */}
-      <div className="well mt-2 flex flex-1 flex-col px-5 pb-5 pt-6">
+      <div className="well mt-2 flex flex-1 flex-col px-2.5 sm:px-5 pb-5 pt-6">
         <p className="flex items-baseline gap-2">
           <span className="text-[15px] text-muted">Starts at</span>
           <span className="text-[34px] leading-none tracking-[-0.04em]">{usd(s.price)}</span>
@@ -161,7 +161,7 @@ export function ServicesSection() {
 
         <Reveal className="mt-4">
           <div className="shell mb-4">
-            <p className="panel px-5 py-4 text-[15px] leading-relaxed text-ink/70 md:px-6">
+            <p className="panel px-2.5 sm:px-5 py-4 text-[15px] leading-relaxed text-ink/70 md:px-6">
               <span className="font-medium text-ink">No hard boundaries.</span> These packages are where most projects
               start. Bigger, smaller or somewhere in between, we shape the scope around what you need and price it on its
               requirements and complexity, agreed before anything starts.
@@ -193,7 +193,7 @@ export function ServicesSection() {
           {extraGroups.map((group, g) => (
             <Reveal key={group} delay={(g % 2) * 0.06} className="shell h-full">
               <p className="px-4 pb-3 pt-2 font-mono text-[12px] uppercase tracking-[0.14em] text-ink/45">{group}</p>
-              <ul className="panel px-5 py-1">
+              <ul className="panel px-2.5 sm:px-5 py-1">
                 {extras
                   .filter((x) => x.group === group)
                   .map((x) => (
