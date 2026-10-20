@@ -30,28 +30,33 @@ export const site = {
   email: "hello@vorq.agency",
   bookPath: "/book",
   description:
-    "Vorq is Priyanshu Bhardwaj and Ravi Pratap Singh. We design and build websites, redesigns, and MVPs for early-stage teams. Published prices. You own the code.",
+    "Vorq is Priyanshu Bhardwaj and Ravi Pratap Singh. We build our own tools, including Gradient Forge, and we design and build websites, redesigns, and MVPs. Published prices. You own the code.",
 } as const;
 
 export const calendlyUrl =
   "https://calendly.com/vorqdesign/30min?primary_color=111111&hide_gdpr_banner=1&background_color=f3f3f3&text_color=111111";
 
 export const intro = {
-  title: "We design and build websites and MVPs.",
-  body: "Priyanshu Bhardwaj and Ravi Pratap Singh. Fixed scope, published prices, and you own the code.",
+  title: "Tools, and the sites we build.",
+  body: "Priyanshu Bhardwaj and Ravi Pratap Singh. We build Gradient Forge, and we design and build websites and MVPs.",
 } as const;
 
 export const contactNote =
   "Send the work, the deadline, and the budget. You get a fixed scope and a fixed price within 24 hours. Most projects go live in under a week. You own the code.";
 
-export const product = {
-  name: "Gradient Forge",
-  kicker: "A Vorq product",
-  headline: "Shader backgrounds for Next.js.",
-  summary:
-    "A studio for designing animated shader backgrounds and copying them into a React or Next.js project. Tune a live shader, then copy the component.",
-  href: "https://gradient-forge-nu.vercel.app",
-} as const;
+export const tools = [
+  {
+    name: "Gradient Forge",
+    pitch: "Shader backgrounds for Next.js. Tune a live shader, then copy the component.",
+    note: "Built on Paper shaders. Pro is $8 a month or $60 a year.",
+    href: "https://gradient-forge-nu.vercel.app",
+    try: "https://gradient-forge-nu.vercel.app/studio",
+    image: "/tools/gradient-forge.jpg",
+    alt: "Gradient Forge studio, with the Iris mesh gradient on the canvas and the color, shape, and motion controls",
+  },
+] as const;
+
+export const product = tools[0];
 
 export const services = [
   {
@@ -105,6 +110,23 @@ export const customWork = {
   title: "Need something bigger?",
   body: "A larger scope, ongoing work, or a specific brief. We’ll name the number together before anyone starts.",
 } as const;
+
+/**
+ * Homepage work. Leave this empty until the portfolio is rebuilt.
+ * The Work section renders a single line while the array is empty.
+ * Older client records stay in `projects` and are not rendered.
+ * Kine UI is live, but it is published as an Open Dev Society library,
+ * so it is not listed with Vorq's tools.
+ */
+export type WorkItem = {
+  title: string;
+  href: string;
+  summary: string;
+  image: string;
+  alt: string;
+};
+
+export const work: WorkItem[] = [];
 
 export const projects = [
   {
@@ -252,10 +274,9 @@ export const values = [
 ] as const;
 
 export const nav = [
-  { label: "Work", href: "/#work" },
+  { label: "Tools", href: "/#tools" },
   { label: "Services", href: "/#services" },
   { label: "Process", href: "/#process" },
-  { label: "Pricing", href: "/#pricing" },
   { label: "Studio", href: "/team" },
 ] as const;
 

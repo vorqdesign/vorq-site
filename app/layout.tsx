@@ -29,7 +29,7 @@ const mono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Vorq — Websites and MVPs for early-stage teams",
+    default: "Vorq — Tools, websites, and MVPs",
     template: "%s — Vorq",
   },
   description: site.description,
@@ -39,12 +39,12 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     siteName: "Vorq",
-    title: "Vorq — Websites and MVPs for early-stage teams",
+    title: "Vorq — Tools, websites, and MVPs",
     description: site.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vorq — Websites and MVPs for early-stage teams",
+    title: "Vorq — Tools, websites, and MVPs",
     description: site.description,
   },
   robots: { index: true, follow: true },

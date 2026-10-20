@@ -14,7 +14,7 @@ export default function SiteFooter() {
             <p>
               Priyanshu Bhardwaj and Ravi Pratap Singh.
               <br />
-              Websites and MVPs.
+              Tools, websites, and MVPs.
             </p>
           </div>
           <div className="footer-cols">
