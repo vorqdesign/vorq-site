@@ -1,82 +1,39 @@
 "use client";
 
-import React, { useState } from "react";
-import { Check, Link as LinkIcon, Linkedin, Facebook, Twitter } from "lucide-react";
+import { useState } from "react";
 
-interface ShareButtonsProps {
-    title: string;
-    url?: string;
-}
+/** Copy link, X and LinkedIn. The URL is read on click, so server and client render the same markup. */
+export default function ShareButtons({ title }: { title: string }) {
+  const [copied, setCopied] = useState(false);
+  const pill = "rounded-full bg-mist px-4 py-2 text-[13px] text-ink/70 transition-colors hover:bg-ink hover:text-white";
 
-export default function ShareButtons({ title, url }: ShareButtonsProps) {
-    const [copied, setCopied] = useState(false);
+  const open = (make: (url: string) => string) => window.open(make(window.location.href), "_blank", "noopener,noreferrer");
 
-    // Use window.location.href if url is not provided (client-side only)
-    const shareUrl = url || (typeof window !== "undefined" ? window.location.href : "");
-
-    const handleCopy = () => {
-        if (!shareUrl) return;
-        navigator.clipboard.writeText(shareUrl);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    };
-
-    const handleShare = (platform: string) => {
-        if (!shareUrl) return;
-
-        let link = "";
-        switch (platform) {
-            case "twitter":
-                link = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(shareUrl)}`;
-                break;
-            case "facebook":
-                link = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
-                break;
-            case "linkedin":
-                link = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
-                break;
-        }
-
-        if (link) {
-            window.open(link, "_blank", "width=600,height=400");
-        }
-    };
-
-    return (
-        <div className="flex items-center gap-3">
-            <span className="text-sm text-gray-400 font-medium mr-2">Share:</span>
-
-            <button
-                onClick={() => handleShare("twitter")}
-                aria-label="Share on X (Twitter)"
-                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 transition-colors text-sm font-bold"
-            >
-                <Twitter size={16} />
-            </button>
-
-            <button
-                onClick={() => handleShare("facebook")}
-                aria-label="Share on Facebook"
-                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 transition-colors text-sm font-bold"
-            >
-                <Facebook size={16} />
-            </button>
-
-            <button
-                onClick={() => handleShare("linkedin")}
-                aria-label="Share on LinkedIn"
-                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 transition-colors text-sm font-bold"
-            >
-                <Linkedin size={16} />
-            </button>
-
-            <button
-                onClick={handleCopy}
-                aria-label="Copy Link"
-                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 transition-colors text-sm font-bold relative"
-            >
-                {copied ? <Check size={16} className="text-green-600" /> : <LinkIcon size={16} />}
-            </button>
-        </div>
-    );
+  return (
+    <div className="flex flex-wrap gap-2">
+      <button
+        className={pill}
+        onClick={() => {
+          navigator.clipboard.writeText(window.location.href).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+          });
+        }}
+      >
+        {copied ? "Link copied" : "Copy link"}
+      </button>
+      <button
+        className={pill}
+        onClick={() => open((u) => `https://x.com/intent/post?text=${encodeURIComponent(title)}&url=${encodeURIComponent(u)}`)}
+      >
+        Share on X
+      </button>
+      <button
+        className={pill}
+        onClick={() => open((u) => `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(u)}`)}
+      >
+        LinkedIn
+      </button>
+    </div>
+  );
 }

@@ -2,138 +2,148 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
+import { nav } from "../content";
+import { morphDistance } from "./logoMorph";
 
-export default function VorqNav() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const lastScrollY = useRef(0);
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
-  const navLinks = [
-    { label: "Services", href: "/#services" },
-    { label: "Projects", href: "/#projects" },
-    { label: "Blog", href: "/blog" },
-    { label: "Team", href: "/team" },
-  ];
+/**
+ * `overHero` (home page only): the nav starts invisible while the big 3D wordmark owns the hero,
+ * fades in as that wordmark travels up, and its own logo appears the moment the wordmark lands.
+ */
+export default function VorqNav({ overHero = false }: { overHero?: boolean }) {
+  const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(overHero ? 0 : 1);
+  const lastY = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      // Show navbar when scrolling up or at the top
-      if (currentScrollY < lastScrollY.current || currentScrollY < 100) {
-        setIsVisible(true);
-      } else {
-        // Hide navbar when scrolling down (after 100px)
-        setIsVisible(false);
-      }
-
-      lastScrollY.current = currentScrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const d = overHero ? morphDistance() : 0;
+      setProgress(overHero ? clamp01(y / d) : 1);
+      setScrolled(y > 8);
+      // On the home page, give the freshly landed logo a moment before hide-on-scroll kicks in.
+      setHidden(y > d + (overHero ? 600 : 120) && y > lastY.current);
+      lastY.current = y;
     };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [overHero]);
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const docked = progress >= 1 || open;
+  const reveal = open ? 1 : clamp01((progress - 0.7) / 0.3);
+  const logoIn = open ? 1 : clamp01((progress - 0.94) / 0.06);
 
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = open ? "hidden" : "";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
     };
-  }, [mobileMenuOpen]);
+  }, [open]);
 
   return (
-    <>
-      {/* Backdrop Overlay */}
-      {mobileMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300"
-          onClick={() => setMobileMenuOpen(false)}
-          aria-hidden="true"
-        />
-      )}
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-[transform,background-color,box-shadow] duration-300 ease-out ${
+        hidden && !open ? "-translate-y-full" : "translate-y-0"
+      } ${
+        !docked ? "bg-transparent" : scrolled || open ? "bg-white/85 backdrop-blur-xl shadow-[0_1px_0_rgb(0_0_0/0.06)]" : "bg-white"
+      }`}
+    >
+      <div className="vorq-container flex h-[72px] md:h-[88px] items-center justify-between gap-8">
+        <Link
+          id="nav-logo"
+          href="/"
+          style={{ opacity: logoIn }}
+          className="font-wordmark text-[28px] md:text-[34px] leading-none"
+          aria-label="VORQ home"
+        >
+          VORQ
+        </Link>
 
-      <nav
-        className={`w-full bg-white fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"
-          }`}
-      >
-        <div className="vorq-container">
-          <div className="flex items-center justify-between py-6">
-            {/* Logo */}
-            <Link href="/" className="vorq-logo">
-              <span className="font-bold text-4xl" style={{ fontFamily: "'Sekuya', serif" }}>VORQ</span>
-            </Link>
-
-            <div className="flex gap-12">
-              {/* Desktop Navigation Links */}
-              <div className="hidden lg:flex items-center gap-8">
-                {navLinks.map((link) => (
-                  <Link key={link.label} href={link.href} className="vorq-nav-link">
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-
-              {/* Desktop CTA Buttons */}
-              <div className="hidden lg:flex items-center gap-4">
-                <Link href="/book" className="vorq-btn-secondary">
-                  Request a Quote
-                </Link>
-                <Link href="/book" className="vorq-btn-primary">
-                  Book a Call
-                </Link>
-              </div>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="lg:hidden p-2 text-[#111111] hover:text-[#000000] transition-colors duration-150"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
+        <nav
+          style={{ opacity: reveal }}
+          className={`hidden lg:flex items-center gap-9 ${reveal < 0.5 ? "pointer-events-none" : ""}`}
+          aria-label="Main"
+        >
+          {nav.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="text-[13px] font-medium uppercase tracking-[0.12em] text-ink/70 hover:text-ink transition-colors"
             >
-              {mobileMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
-          </div>
+              {link.label}
+            </Link>
+          ))}
+        </nav>
 
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="lg:hidden pb-6 border-t border-[#dddddd] pt-4">
-              <div className="flex flex-col gap-4">
+        <div style={{ opacity: reveal }} className={`flex items-center gap-3 ${reveal < 0.5 ? "pointer-events-none" : ""}`}>
+          <Link href="/book" className="btn btn-dark btn-sm hidden sm:inline-flex">
+            Book a call
+          </Link>
+          <button
+            className="lg:hidden -mr-2 grid h-11 w-11 place-items-center"
+            onClick={() => setOpen(!open)}
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+          >
+            <span className="relative block h-3 w-6">
+              <span
+                className={`absolute left-0 h-[2px] w-6 bg-ink transition-transform duration-300 ${open ? "top-[5px] rotate-45" : "top-0"}`}
+              />
+              <span
+                className={`absolute left-0 h-[2px] w-6 bg-ink transition-transform duration-300 ${open ? "top-[5px] -rotate-45" : "top-[10px]"}`}
+              />
+            </span>
+          </button>
+        </div>
+      </div>
 
-                {navLinks.map((link) => (
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:hidden fixed inset-x-0 top-[72px] md:top-[88px] h-[calc(100dvh-72px)] md:h-[calc(100dvh-88px)] bg-white"
+          >
+            <nav className="vorq-container flex h-full flex-col pt-6 pb-10" aria-label="Mobile">
+              {nav.map((link, i) => (
+                <motion.div
+                  key={link.label}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.04 * i, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                >
                   <Link
-                    key={link.label}
                     href={link.href}
-                    className="vorq-nav-link py-2"
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={() => setOpen(false)}
+                    className="block py-3 text-[40px] font-medium leading-tight tracking-[-0.03em]"
                   >
                     {link.label}
                   </Link>
-                ))}
-                <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-[#dddddd]">
-                  <Link href="/book" className="vorq-btn-secondary text-center">
-                    Request a Quote
-                  </Link>
-                  <Link href="/book" className="vorq-btn-primary text-center">
-                    Book a Call
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </nav>
-    </>
+                </motion.div>
+              ))}
+              <Link href="/book" onClick={() => setOpen(false)} className="btn btn-dark mt-auto w-full">
+                Book a free call
+              </Link>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 }

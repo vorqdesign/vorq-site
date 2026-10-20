@@ -1,182 +1,129 @@
-"use client";
+import { principles, services, usd } from "../content";
+import { Reveal } from "./Motion";
 
-import { useRef } from "react";
-import gsap from "gsap";
-import { GridScan } from "./GridScan";
-import MagnetLines from "./MagnetLines";
-import FaultyTerminal from "./FaultyTerminal";
-import Dither from "./Dither";
+const webApp = services.find((s) => s.id === "webapp")!;
 
-interface WhyVorqItem {
-    id: number;
-    title: string;
-    description: string;
-    span: string; // Tailwind class for grid span
-    color: string; // Tailwind color class for hover effects
-    hoverBg: string; // Tailwind background color for hover
+function Receipt() {
+  const rows = [
+    [webApp.name, usd(webApp.price)],
+    ["Revision rounds", "Included"],
+    ["Hourly billing", "None"],
+  ];
+  return (
+    <div className="w-full max-w-[320px] rounded-2xl bg-white p-5 font-mono text-[13px] ring-1 ring-black/[0.06]">
+      {rows.map(([k, v]) => (
+        <div key={k} className="flex justify-between py-1 text-ink/50">
+          <span>{k}</span>
+          <span>{v}</span>
+        </div>
+      ))}
+      <div className="my-3 border-t border-dashed border-ink/15" />
+      <div className="flex justify-between text-ink">
+        <span>Total, fixed</span>
+        <span>{usd(webApp.price)}</span>
+      </div>
+    </div>
+  );
 }
 
-const items: WhyVorqItem[] = [
-    {
-        id: 1,
-        title: "The Three Things That Matter",
-        description: "Lighthouse 90+, Framer Motion, conversion-focused design.",
-        span: "md:col-span-2",
-        color: "text-blue-400",
-        hoverBg: "group-hover:bg-blue-500/10",
-    },
-    {
-        id: 2,
-        title: "Your Team, Not a Factory",
-        description: "2+ specialists assigned to you. Direct access.",
-        span: "md:col-span-1",
-        color: "text-purple-400",
-        hoverBg: "group-hover:bg-purple-500/10",
-    },
-    {
-        id: 3,
-        title: "Zero Templates. Pure Craft.",
-        description: "Custom-built from scratch. Every line written for you.",
-        span: "md:col-span-1",
-        color: "text-emerald-400",
-        hoverBg: "group-hover:bg-emerald-500/10",
-    },
-    {
-        id: 4,
-        title: "Global Standard, Local Dedication",
-        description: "6+ years team experience. Global quaility.",
-        span: "md:col-span-2",
-        color: "text-orange-400",
-        hoverBg: "group-hover:bg-orange-500/10",
-    }
-];
+function Weeks() {
+  const stages = ["Design", "Design", "Build", "Build", "Live"];
+  return (
+    <div className="grid w-full max-w-[320px] grid-cols-5 gap-1.5">
+      {stages.map((stage, i) => (
+        <div key={i} className="flex flex-col items-center gap-2">
+          <div className="relative h-16 w-full overflow-hidden rounded-lg bg-white ring-1 ring-black/[0.06]">
+            <div className="absolute inset-0 bg-accent" style={{ opacity: 0.3 + i * 0.175 }} />
+            <span className="absolute inset-x-0 bottom-1.5 text-center font-mono text-[10px] uppercase text-white mix-blend-normal">
+              {stage}
+            </span>
+          </div>
+          <span className="font-mono text-[11px] text-ink/40">Wk {i + 1}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Layouts() {
+  const block = "rounded-[4px] bg-ink/10";
+  return (
+    <div className="flex w-full max-w-[320px] gap-2">
+      <div className="flex h-24 flex-1 flex-col gap-1.5 rounded-xl bg-white p-2.5 ring-1 ring-black/[0.06]">
+        <div className={`${block} h-2 w-1/2`} />
+        <div className="flex-1 rounded-[4px] bg-accent/70" />
+        <div className="flex gap-1.5">
+          <div className={`${block} h-3 flex-1`} />
+          <div className={`${block} h-3 flex-1`} />
+        </div>
+      </div>
+      <div className="flex h-24 flex-1 gap-1.5 rounded-xl bg-white p-2.5 ring-1 ring-black/[0.06]">
+        <div className={`${block} w-1/3`} />
+        <div className="flex flex-1 flex-col gap-1.5">
+          <div className={`${block} h-2 w-3/4`} />
+          <div className={`${block} h-2 w-1/2`} />
+          <div className="mt-auto h-6 rounded-[4px] bg-[#45e6ff]/70" />
+        </div>
+      </div>
+      <div className="grid h-24 flex-1 grid-cols-2 gap-1.5 rounded-xl bg-white p-2.5 ring-1 ring-black/[0.06]">
+        <div className="col-span-2 rounded-[4px] bg-[#ff6f9c]/60" />
+        <div className={block} />
+        <div className={block} />
+      </div>
+    </div>
+  );
+}
+
+function Ownership() {
+  return (
+    <ul className="w-full max-w-[320px] space-y-2 font-mono text-[13px]">
+      {["Source code", "Repository", "Domain & deploy"].map((item) => (
+        <li key={item} className="flex items-center justify-between rounded-xl bg-white px-4 py-2.5 ring-1 ring-black/[0.06]">
+          <span className="text-ink/55">{item}</span>
+          <span className="text-accent">Yours</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+const visuals = [Receipt, Weeks, Layouts, Ownership];
 
 export function WhyVorqSection() {
-    return (
-        <section className="bg-[#050608] py-24 font-[family-name:var(--font-archivo)]">
-            <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-                {/* Header */}
-                <div className="mb-16">
-                    <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tight">
-                        Why <span className="text-[#A855F7]">Vorq?</span>
-                    </h2>
+  return (
+    <section className="section-pad bg-white">
+      <div className="vorq-container">
+        <Reveal className="mb-12 md:mb-16">
+          <p className="eyebrow text-accent">Why VORQ</p>
+          <h2 className="mt-4 text-[clamp(40px,6vw,88px)] leading-[0.98] tracking-[-0.045em]">
+            Agency craft.
+            <br />
+            <span className="text-ink/35">Without the agency.</span>
+          </h2>
+        </Reveal>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          {principles.map((p, i) => {
+            const Visual = visuals[i];
+            return (
+              <Reveal key={p.title} delay={(i % 2) * 0.08} className="h-full">
+                <div className="shell flex h-full flex-col">
+                  <div className="panel p-2">
+                    <div className="grid h-52 place-items-center rounded-2xl bg-mist/70 px-6">
+                      <Visual />
+                    </div>
+                    <div className="flex items-center justify-between px-4 pb-3 pt-5">
+                      <h3 className="text-[28px] font-medium leading-none tracking-[-0.035em]">{p.title}</h3>
+                      <span className="font-mono text-[12px] text-ink/40">0{i + 1}</span>
+                    </div>
+                  </div>
+                  <p className="well mt-2 flex-1 px-5 py-5 text-[15px] leading-relaxed text-muted">{p.body}</p>
                 </div>
-
-                {/* Bento Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-l border-white/10">
-                    {items.map((item) => (
-                        <BentoCard key={item.id} item={item} />
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-}
-
-function BentoCard({ item }: { item: WhyVorqItem }) {
-    return (
-        <div className={`${item.span} group relative min-h-[300px] p-8 md:p-12 border-r border-b border-white/10 flex flex-col justify-between bg-[#050608] transition-colors duration-500 overflow-hidden`}>
-
-            {/* Dither for Card 1 */}
-            {item.id === 1 && (
-                <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-                    <Dither
-                        waveColor={[0.3, 0.4, 0.6]} // Slight Blue tint
-                        disableAnimation={false}
-                        enableMouseInteraction={true}
-                        mouseRadius={0.3}
-                        colorNum={4}
-                        waveAmplitude={0.3}
-                        waveFrequency={3}
-                        waveSpeed={0.05}
-                    />
-                </div>
-            )}
-
-            {/* GridScan for Card 2 */}
-            {item.id === 2 && (
-                <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
-                    <GridScan
-                        sensitivity={0.55}
-                        lineThickness={1}
-                        linesColor="#392e4e"
-                        gridScale={0.1}
-                        scanColor="#FF9FFC"
-                        scanOpacity={0.4}
-                        enablePost
-                        bloomIntensity={0.6}
-                        chromaticAberration={0.002}
-                        noiseIntensity={0.01}
-                        enableWebcam={false} // Implicitly false based on request context, can enable if desired
-                        className="w-full h-full"
-                    />
-                </div>
-            )}
-
-            {/* MagnetLines for Card 3 */}
-            {item.id === 3 && (
-                <div className="absolute inset-0 z-0 opacity-30 pointer-events-none flex items-center justify-center overflow-hidden">
-                    <MagnetLines
-                        rows={20}
-                        columns={20}
-                        containerSize="250%"
-                        lineColor="#34d399" // Emerald-400
-                        lineWidth="1px"
-                        lineHeight="20px"
-                        baseAngle={0}
-                        style={{ margin: "0 auto" }}
-                    />
-                </div>
-            )}
-
-            {/* FaultyTerminal for Card 4 */}
-            {item.id === 4 && (
-                <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-                    <FaultyTerminal
-                        scale={1.5}
-                        gridMul={[2, 1]}
-                        digitSize={1.2}
-                        timeScale={1}
-                        pause={false}
-                        scanlineIntensity={1}
-                        glitchAmount={1}
-                        flickerAmount={1}
-                        noiseAmp={1}
-                        chromaticAberration={0}
-                        dither={0}
-                        curvature={0}
-                        tint="#fb923c" // Orange-400
-                        mouseReact={true}
-                        mouseStrength={0.5}
-                        pageLoadAnimation={false}
-                        brightness={1}
-                    />
-                </div>
-            )}
-
-            {/* Hover Background Glow (Hidden for interactive cards) */}
-            {item.id !== 1 && item.id !== 2 && item.id !== 3 && item.id !== 4 && (
-                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${item.hoverBg}`} />
-            )}
-
-            {/* Content */}
-            <div className="relative z-10 h-full flex flex-col justify-between pointer-events-none">
-                {/* Top Number */}
-                <span className={`text-lg font-mono opacity-50 group-hover:opacity-100 transition-colors ${item.color}`}>
-                    0{item.id}
-                </span>
-
-                {/* Bottom Content */}
-                <div>
-                    <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight group-hover:translate-y-[-4px] transition-transform duration-300">
-                        {item.title}
-                    </h3>
-                    <p className="text-gray-400 text-lg opacity-100 transform translate-y-0 md:opacity-0 md:translate-y-4 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-300 delay-75">
-                        {item.description}
-                    </p>
-                </div>
-            </div>
-
+              </Reveal>
+            );
+          })}
         </div>
-    );
+      </div>
+    </section>
+  );
 }

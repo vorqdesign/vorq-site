@@ -1,70 +1,44 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Archivo, Henny_Penny, Sekuya } from "next/font/google";
+import { Archivo, Caveat, Geist_Mono, Henny_Penny, Sekuya } from "next/font/google";
 import "./globals.css";
+import Preloader from "./components/Preloader";
+import { MotionProvider } from "./components/Motion";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const archivo = Archivo({ variable: "--font-archivo", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin"], weight: ["600"] });
+const hennypenny = Henny_Penny({ variable: "--font-hennypenny", subsets: ["latin"], weight: ["400"] });
+const sekuya = Sekuya({ variable: "--font-sekuya", subsets: ["latin"], weight: ["400"], adjustFontFallback: false });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const archivo = Archivo({
-  variable: "--font-archivo",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const hennypenny = Henny_Penny({
-  variable: "--font-hennypenny",
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
-const sekuya = Sekuya({
-  variable: "--font-sekuya",
-  subsets: ["latin"],
-  weight: ["400"],
-  adjustFontFallback: false,
-});
+const title = "VORQ | Design engineering studio";
+const description =
+  "VORQ designs and builds landing pages, web apps, dashboards and mobile apps. Fixed prices, custom-built, and you own the code.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.vorq.agency"),
-  title: "VORQ | Premium SaaS Design & Development Agency",
-  description: "We build pixel-perfect SaaS landing pages, marketing sites, and dashboards that convert. Expert Next.js, Framer Motion, and Webflow development.",
-  openGraph: {
-    type: "website",
-    url: "/",
-    title: "VORQ | Premium SaaS Design & Development Agency",
-    description: "We build pixel-perfect SaaS landing pages, marketing sites, and dashboards that convert. Expert Next.js, Framer Motion, and Webflow development.",
-    images: ["/banner.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "VORQ | Premium SaaS Design & Development Agency",
-    description: "We build pixel-perfect SaaS landing pages, marketing sites, and dashboards that convert. Expert Next.js, Framer Motion, and Webflow development.",
-    images: ["/banner.png"],
-  },
-  icons: {
-    icon: "/logo.svg",
-  },
+  title,
+  description,
+  openGraph: { type: "website", url: "/", title, description, images: ["/banner.png"] },
+  twitter: { card: "summary_large_image", title, description, images: ["/banner.png"] },
+  icons: { icon: "/logo.svg" },
 };
 
-import Preloader from "./components/Preloader";
+// Runs before paint so a repeat visit in the same tab never flashes the preloader.
+const seenScript = `try{if(sessionStorage.getItem("vorq-seen")||matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.dataset.seen="1"}catch(e){}`;
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable} ${hennypenny.variable} ${sekuya.variable} antialiased`}>
-        <Preloader />
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: seenScript }} />
+      </head>
+      <body
+        className={`${archivo.variable} ${geistMono.variable} ${caveat.variable} ${hennypenny.variable} ${sekuya.variable} antialiased`}
+      >
+        <MotionProvider>
+          <Preloader />
+          {children}
+        </MotionProvider>
       </body>
     </html>
   );
