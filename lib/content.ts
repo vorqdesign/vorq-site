@@ -34,7 +34,7 @@ export const site = {
 } as const;
 
 export const calendlyUrl =
-  "https://calendly.com/vorqdesign/30min?primary_color=12110e&hide_gdpr_banner=1&background_color=efe8d8&text_color=12110e";
+  "https://calendly.com/vorqdesign/30min?primary_color=111111&hide_gdpr_banner=1&background_color=f3f3f3&text_color=111111";
 
 export const intro = {
   title: "We design and build websites and MVPs.",
@@ -253,6 +253,14 @@ export const values = [
 
 export const nav = [
   { label: "Work", href: "/#work" },
-  { label: "Prices", href: "/#prices" },
+  { label: "Services", href: "/#services" },
+  { label: "Process", href: "/#process" },
+  { label: "Pricing", href: "/#pricing" },
   { label: "Studio", href: "/team" },
 ] as const;
+
+/**
+ * Studio figures. Leave this empty until there are numbers Ravi wants
+ * published. The stats row renders nothing while the array is empty.
+ */
+export const stats: { value: string; label: string }[] = [];

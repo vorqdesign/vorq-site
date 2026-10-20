@@ -1,20 +1,28 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit, Syne } from "next/font/google";
+import { Geist_Mono, Instrument_Serif, Inter_Tight } from "next/font/google";
 import SiteChrome from "./components/SiteChrome";
 import { services, site, team } from "@/lib/content";
 import "./globals.css";
 
-const sans = Outfit({
+const sans = Inter_Tight({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["500", "600", "700"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const display = Syne({
+const serif = Instrument_Serif({
   subsets: ["latin"],
-  weight: ["500", "700"],
-  variable: "--font-display",
+  weight: "400",
+  style: "italic",
+  variable: "--font-serif",
+  display: "swap",
+});
+
+const mono = Geist_Mono({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -44,8 +52,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#12110e",
-  colorScheme: "dark",
+  themeColor: "#F3F3F3",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
 };
@@ -81,7 +89,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${display.variable}`}>
+    <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
       <body>
         <script
           type="application/ld+json"
