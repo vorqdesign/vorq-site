@@ -2,6 +2,12 @@
 
 import { useEffect, useRef } from "react";
 
+function inView(node: HTMLElement) {
+  const rect = node.getBoundingClientRect();
+  const height = window.innerHeight || document.documentElement.clientHeight;
+  return rect.top < height + 80 && rect.bottom > -80;
+}
+
 export default function Reveal({
   children,
   className,
@@ -16,21 +22,40 @@ export default function Reveal({
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    node.dataset.reveal = "";
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || !("IntersectionObserver" in window) || inView(node)) return;
+
+    document.documentElement.classList.add("js");
+    node.dataset.reveal = "pending";
+
     const show = () => {
       node.dataset.show = "true";
     };
+
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
         show();
         observer.disconnect();
       },
-      { threshold: 0.18 },
+      { threshold: 0, rootMargin: "0px 0px 120px 0px" },
     );
     observer.observe(node);
-    return () => observer.disconnect();
+
+    const onScroll = () => {
+      if (inView(node)) show();
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    // If the observer never fires and nothing scrolls, still show the section.
+    const failsafe = window.setTimeout(show, 1600);
+
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(failsafe);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   return (

@@ -677,14 +677,22 @@ a { color: inherit; text-decoration: none; }
 .not-found { padding: 120px 0; }
 .not-found a { text-decoration: underline; text-underline-offset: 0.18em; }
 
-[data-reveal] {
+html.js [data-reveal="pending"] {
   transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
+@keyframes reveal-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  [data-reveal]:not([data-show]) {
+  html.js [data-reveal="pending"]:not([data-show]) {
     opacity: 0;
     transform: translateY(18px);
+    animation: reveal-failsafe 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 1.6s forwards;
   }
 }
 
@@ -738,5 +746,9 @@ a { color: inherit; text-decoration: none; }
   .btn:hover { transform: none; }
   .shot img, .service-shot img, .case-shot img, .portrait img { transition: none; }
   .gallery a:hover img, .service:hover img, .case:hover img { transform: none; }
-  [data-reveal] { transition: none; }
+  html.js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
