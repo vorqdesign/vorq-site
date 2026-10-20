@@ -1,42 +1,85 @@
-import type { Metadata } from "next";
-import { Syne, Playfair_Display } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist_Mono, Instrument_Serif, Inter_Tight } from "next/font/google";
+import SiteChrome from "./components/SiteChrome";
+import { services, site, team } from "@/lib/content";
 import "./globals.css";
 
-const syne = Syne({
-  variable: "--font-syne",
+const sans = Inter_Tight({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["500", "600", "700"],
+  variable: "--font-sans",
+  display: "swap",
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const serif = Instrument_Serif({
   subsets: ["latin"],
-  weight: ["700", "900"],
-  style: ["normal", "italic"],
+  weight: "400",
+  style: "italic",
+  variable: "--font-serif",
+  display: "swap",
+});
+
+const mono = Geist_Mono({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-mono",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.vorq.agency"),
-  title: "VORQ — Web Design That Converts",
-  description:
-    "Premium web design, redesigns & MVP builds — at prices that respect early-stage budgets. No bloat, no templates, no BS.",
+  metadataBase: new URL(site.url),
+  title: {
+    default: "Vorq — Tools, websites, and MVPs",
+    template: "%s — Vorq",
+  },
+  description: site.description,
+  applicationName: "Vorq",
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     url: "/",
-    title: "VORQ — Web Design That Converts",
-    description:
-      "Premium web design, redesigns & MVP builds — at prices that respect early-stage budgets.",
-    images: ["/banner.png"],
+    siteName: "Vorq",
+    title: "Vorq — Tools, websites, and MVPs",
+    description: site.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: "VORQ — Web Design That Converts",
-    description:
-      "Premium web design, redesigns & MVP builds — at prices that respect early-stage budgets.",
-    images: ["/banner.png"],
+    title: "Vorq — Tools, websites, and MVPs",
+    description: site.description,
   },
-  icons: {
-    icon: "/logo.svg",
+  robots: { index: true, follow: true },
+  icons: { icon: "/logo.svg" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#F3F3F3",
+  colorScheme: "light",
+  width: "device-width",
+  initialScale: 1,
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: site.name,
+  url: site.url,
+  email: site.email,
+  description: site.description,
+  founder: team.map((member) => ({
+    "@type": "Person",
+    name: member.name,
+    jobTitle: member.role,
+  })),
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Vorq services",
+    itemListElement: services.map((service) => ({
+      "@type": "Offer",
+      name: service.name,
+      description: `${service.tagline} ${service.price}.`,
+      url: `${site.url}/book`,
+      priceCurrency: "USD",
+    })),
   },
 };
 
@@ -46,9 +89,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${syne.variable} ${playfair.variable} antialiased`}>
-        {children}
+    <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <a className="skip" href="#content">
+          Skip to content
+        </a>
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

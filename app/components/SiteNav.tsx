@@ -1,149 +1,118 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useId, useRef, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { nav, site } from "@/lib/content";
 
 export default function SiteNav() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
+  const wasOpen = useRef(false);
+  const menuId = useId();
 
   useEffect(() => {
-    const onScroll = () => {
-      const nav = document.querySelector("nav") as HTMLElement | null;
-      if (!nav) return;
-      if (window.scrollY > 60) {
-        nav.classList.add("nav-scrolled");
-      } else {
-        nav.classList.remove("nav-scrolled");
+    document.body.classList.toggle("nav-open", open);
+    return () => document.body.classList.remove("nav-open");
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) {
+      if (wasOpen.current) menuButton.current?.focus();
+      wasOpen.current = false;
+      return;
+    }
+    wasOpen.current = true;
+    const root = panel.current;
+    const items = root?.querySelectorAll<HTMLElement>("a");
+    items?.[0]?.focus();
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (event.key !== "Tab" || !items?.length || !menuButton.current) return;
+      const list = [menuButton.current, ...Array.from(items)];
+      const first = list[0];
+      const last = list[list.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll(); // Set initial state
-    return () => window.removeEventListener("scroll", onScroll);
+
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth > 980) setOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // Lock body scroll when menu is open
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-  }, [isMenuOpen]);
-
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.classList.add("menu-open");
-    } else {
-      document.body.classList.remove("menu-open");
-    }
-    return () => document.body.classList.remove("menu-open");
-  }, [isMenuOpen]);
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const menuLinks = [
-    { id: "01", name: "Work", href: "/#work" },
-    { id: "02", name: "Pricing", href: "/#pricing" },
-    { id: "03", name: "Process", href: "/#process" },
-    { id: "04", name: "Team", href: "/team" },
-    { id: "05", name: "Book a Call", href: "/book", highlight: true },
-  ];
-
+  const isCurrent = (href: string) => href === "/team" && pathname === "/team";
 
   return (
-    <>
-      <nav>
-        <a href="/" className="nav-logo">
-          VORQ
-        </a>
-
-        <div className="nav-breadcrumb">
-          <button 
-            className={`nav-menu-toggle ${isMenuOpen ? "nav-menu-toggle--open" : ""}`}
-            onClick={toggleMenu}
-            data-cursor={isMenuOpen ? "Close" : "Menu"}
-          >
-            <div className="breadcrumb-icon">
-              <span />
-              <span />
-              <span />
-            </div>
-          </button>
-        </div>
-
-        <div className="nav-right">
-          <a href="/#work" className="nav-link">
-            Work
-          </a>
-          <a href="/#pricing" className="nav-link">
-            Pricing
-          </a>
-          <a href="/#process" className="nav-link">
-            Process
-          </a>
-          <a href="/team" className="nav-link">
-            Team
-          </a>
-          <a href="/book" className="nav-btn" data-cursor="Let's connect">
-            Book a Call
-          </a>
-        </div>
-      </nav>
-
-      {/* Mobile Menu Overlay — Refined & Airy */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            className="nav-mobile-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <button className="nav-mobile-close" onClick={toggleMenu} data-cursor="Close">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
-
-            <div className="nav-mobile-links">
-              {menuLinks.map((link, i) => (
-                <motion.a
-                  key={link.name}
-                  href={link.href}
-                  className={link.highlight ? "nav-mobile-btn" : "nav-mobile-link"}
-                  onClick={() => setIsMenuOpen(false)}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 + 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  data-index={link.id}
-                >
-                  {!link.highlight && <span className="nav-mobile-link-id">{link.id}</span>}
-                  {link.name}
-                  {link.highlight && (
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginLeft: '12px' }}>
-                      <path d="M4 14l10-10M14 4H7M14 4v7" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  )}
-                </motion.a>
-              ))}
-            </div>
-
-            <motion.div 
-              className="nav-mobile-footer"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
+    <header className={`site-header${open ? " is-open" : ""}`}>
+      <div className="nav-bar">
+        <Link href="/" className="logo">
+          <span className="mark" aria-hidden="true" />
+          Vorq
+        </Link>
+        <nav className="desk-nav" aria-label="Primary">
+          {nav.map((item) => (
+            <Link key={item.href} href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+        <Link className="nav-cta" href={site.bookPath}>
+          Start a project
+        </Link>
+        <button
+          ref={menuButton}
+          className="menu-btn"
+          type="button"
+          aria-expanded={open}
+          aria-controls={menuId}
+          onClick={() => setOpen((value) => !value)}
+        >
+          <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+          <span className="menu-icon" data-open={open ? "" : undefined} aria-hidden="true">
+            <span />
+            <span />
+          </span>
+        </button>
+      </div>
+      {open ? (
+        <div ref={panel} id={menuId} className="mobile-nav" role="dialog" aria-modal="true" aria-label="Menu">
+          {nav.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              aria-current={isCurrent(item.href) ? "page" : undefined}
+              onClick={() => setOpen(false)}
             >
-              <div className="nav-mobile-contact">
-                <span>Email</span>
-                <a href="mailto:hello@vorq.agency">hello@vorq.agency</a>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+              {item.label}
+            </Link>
+          ))}
+          <Link href={site.bookPath} onClick={() => setOpen(false)}>
+            Start a project
+          </Link>
+          <a href={`mailto:${site.email}`} onClick={() => setOpen(false)}>
+            {site.email}
+          </a>
+        </div>
+      ) : null}
+    </header>
   );
 }
