@@ -1,87 +1,59 @@
-import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Instrument_Serif, Inter_Tight } from "next/font/google";
-import SiteChrome from "./components/SiteChrome";
-import { services, site, team } from "@/lib/content";
+import type { Metadata } from "next";
+import { Geist, Geist_Mono, Archivo, Henny_Penny, Sekuya } from "next/font/google";
 import "./globals.css";
 
-const sans = Inter_Tight({
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-sans",
-  display: "swap",
 });
 
-const serif = Instrument_Serif({
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
-  weight: "400",
-  style: "italic",
-  variable: "--font-serif",
-  display: "swap",
 });
 
-const mono = Geist_Mono({
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-mono",
-  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
+const hennypenny = Henny_Penny({
+  variable: "--font-hennypenny",
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
+const sekuya = Sekuya({
+  variable: "--font-sekuya",
+  subsets: ["latin"],
+  weight: ["400"],
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
-  title: {
-    default: "Vorq — Tools, websites, and MVPs",
-    template: "%s — Vorq",
-  },
-  description: site.description,
-  applicationName: "Vorq",
-  alternates: { canonical: "/" },
+  metadataBase: new URL("https://www.vorq.agency"),
+  title: "VORQ | Premium SaaS Design & Development Agency",
+  description: "We build pixel-perfect SaaS landing pages, marketing sites, and dashboards that convert. Expert Next.js, Framer Motion, and Webflow development.",
   openGraph: {
     type: "website",
     url: "/",
-    siteName: "Vorq",
-    title: "Vorq — Tools, websites, and MVPs",
-    description: site.description,
+    title: "VORQ | Premium SaaS Design & Development Agency",
+    description: "We build pixel-perfect SaaS landing pages, marketing sites, and dashboards that convert. Expert Next.js, Framer Motion, and Webflow development.",
+    images: ["/banner.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vorq — Tools, websites, and MVPs",
-    description: site.description,
+    title: "VORQ | Premium SaaS Design & Development Agency",
+    description: "We build pixel-perfect SaaS landing pages, marketing sites, and dashboards that convert. Expert Next.js, Framer Motion, and Webflow development.",
+    images: ["/banner.png"],
   },
-  robots: { index: true, follow: true },
-  icons: { icon: "/logo.svg" },
-};
-
-export const viewport: Viewport = {
-  themeColor: "#F3F3F3",
-  colorScheme: "light",
-  width: "device-width",
-  initialScale: 1,
-};
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: site.name,
-  url: site.url,
-  email: site.email,
-  description: site.description,
-  founder: team.map((member) => ({
-    "@type": "Person",
-    name: member.name,
-    jobTitle: member.role,
-  })),
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Vorq services",
-    itemListElement: services.map((service) => ({
-      "@type": "Offer",
-      name: service.name,
-      description: `${service.tagline} ${service.price}.`,
-      url: `${site.url}/book`,
-      priceCurrency: "USD",
-    })),
+  icons: {
+    icon: "/logo.svg",
   },
 };
+
+import Preloader from "./components/Preloader";
 
 export default function RootLayout({
   children,
@@ -89,16 +61,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
-      <body>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <a className="skip" href="#content">
-          Skip to content
-        </a>
-        <SiteChrome>{children}</SiteChrome>
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable} ${hennypenny.variable} ${sekuya.variable} antialiased`}>
+        <Preloader />
+        {children}
       </body>
     </html>
   );
